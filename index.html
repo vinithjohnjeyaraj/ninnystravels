@@ -112,6 +112,14 @@
             padding: 2rem;
             flex-direction: column; /* Allow content to stack */
         }
+
+        /* Google Maps specific styling */
+        #map {
+            height: 400px; /* Adjusted height for better visibility */
+            width: 100%;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -122,8 +130,8 @@
             <!-- Website Title/Logo -->
             <div class="text-3xl font-bold mb-4 md:mb-0">
                 <a href="index.html" id="siteLogoLink" class="hover:text-blue-200 transition duration-300">
-                    <!-- Logo image inserted here -->
-                    <img src="logo.jpg" onerror="this.onerror=null;this.src='https://placehold.co/150x50/3b82f6/ffffff?text=NinnysTravels';" alt="NinnysTravels.in Logo" class="h-10 w-auto rounded-md">
+                    <!-- Removed the placeholder image as requested -->
+                    NinnysTravels.in
                 </a>
             </div>
 
@@ -148,6 +156,9 @@
                     </li>
                     <li>
                         <a href="#" id="aboutUsLink" class="block py-2 px-4 rounded-full hover:bg-blue-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">ABOUT US</a>
+                    </li>
+                    <li>
+                        <a href="#" id="viewMapLink" class="block py-2 px-4 rounded-full bg-blue-600 hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">VIEW MAP</a>
                     </li>
                     <!-- Authentication Links (Dynamic) -->
                     <li id="authLinksContainer" class="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-8 text-lg">
@@ -525,6 +536,9 @@
             <p class="mt-4 text-gray-600">
                 Don't have an account? <a href="#" id="showRegisterLink" class="text-blue-600 hover:underline">Register here</a>
             </p>
+            <p class="mt-2 text-gray-600">
+                <a href="#" id="forgotPasswordLink" class="text-blue-600 hover:underline">Forgot Password?</a>
+            </p>
             <div class="mt-6 border-t border-gray-200 pt-6">
                 <button id="googleSignInButton" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full text-lg flex items-center justify-center space-x-2 transition duration-300">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -533,9 +547,6 @@
                     <span>Sign in with Google</span>
                 </button>
             </div>
-            <p class="mt-4 text-gray-600">
-                Don't have an account? <a href="#" id="showRegisterLink" class="text-blue-600 hover:underline">Register here</a>
-            </p>
         </div>
     </div>
 
@@ -580,6 +591,16 @@
         </div>
     </div>
 
+    <!-- Google Maps Modal -->
+    <div id="googleMapsModal" class="modal-overlay">
+        <div class="modal-content !max-w-3xl"> <!-- Increased max-width for map -->
+            <button class="modal-close-button" id="closeMapsModalButton">&times;</button>
+            <h3 class="text-3xl font-bold mb-6 text-blue-800">Explore on Map</h3>
+            <div id="map"></div>
+            <p class="text-sm text-gray-500 mt-4">Map powered by Google Maps. Displays a general view of India.</p>
+        </div>
+    </div>
+
 
     <!-- Firebase SDKs -->
     <script type="module">
@@ -587,25 +608,21 @@
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        // --- Firebase Configuration (for local testing or if not using Cloudflare Identity) ---
-        // If you are using Cloudflare Pages and want Firebase Auth to work, you'll need to
-        // set these as environment variables in Cloudflare Pages build settings.
-        // For local testing, replace placeholders with your actual Firebase project config.
-        const LOCAL_FIREBASE_CONFIG = {
-            apiKey: "YOUR_FIREBASE_WEB_API_KEY", // Replace with your Firebase Web API Key
-            authDomain: "your-project-id.firebaseapp.com", // Replace with your Firebase Auth Domain
-            projectId: "your-project-id", // Replace with your Firebase Project ID
-            storageBucket: "your-project-id.appspot.com", // Replace with your Firebase Storage Bucket
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID", // Replace with your Firebase Messaging Sender ID
-            appId: "YOUR_FIREBASE_APP_ID" // Replace with your Firebase App ID
+        // --- Firebase Configuration ---
+        // These are your actual Firebase project configuration details.
+        const firebaseConfig = {
+            apiKey: "AIzaSyCfVWIbz_HfaaJtMbAiGuoc9TQjg--n5Js",
+            authDomain: "ninnystravels.firebaseapp.com",
+            projectId: "ninnystravels",
+            storageBucket: "ninnystravels.firebasestorage.app",
+            messagingSenderId: "788837044603",
+            appId: "1:788837044603:web:e8e0005cb0d9ac74be6dde",
+            measurementId: "G-ZRT77F9W35"
         };
         // --- END Firebase Config ---
 
         // These variables are for Firebase initialization.
-        // For Cloudflare Pages, these would ideally come from environment variables.
-        // For local testing, they use the hardcoded LOCAL_FIREBASE_CONFIG.
-        const appId = "local-travel-app"; // A dummy app ID for local use
-        const firebaseConfig = LOCAL_FIREBASE_CONFIG;
+        const appId = "ninnystravels"; // Using your projectId as a logical app ID
         const initialAuthToken = null; // No custom token for local anonymous sign-in
 
         let app;
@@ -627,25 +644,25 @@
         const loginEmailInput = document.getElementById('loginEmail');
         const loginPasswordInput = document.getElementById('loginPassword');
         const googleSignInButton = document.getElementById('googleSignInButton');
-        const forgotPasswordLink = document.getElementById('forgotPasswordLink');
-        const showRegisterLink = document.getElementById('showRegisterLink');
 
         const registerForm = document.getElementById('registerForm');
         const registerNameInput = document.getElementById('registerName');
         const registerEmailInput = document.getElementById('registerEmail');
         const registerPasswordInput = document.getElementById('registerPassword');
-        const showLoginLink = document.getElementById('showLoginLink');
 
-        // FIX: Corrected the typo here. Removed `document =`
         const forgotPasswordForm = document.getElementById('forgotPasswordForm');
         const forgotEmailInput = document.getElementById('forgotEmail');
-        const backToLoginLink = document.getElementById('backToLoginLink');
 
         // Get references to message modal elements (from existing script)
         const messageModal = document.getElementById('messageModal');
         const modalMessage = document.getElementById('modalMessage');
         const modalSpinner = document.getElementById('modalSpinner');
         const closeModalButton = document.getElementById('closeModalButton');
+
+        // Google Maps elements
+        const googleMapsModal = document.getElementById('googleMapsModal');
+        const closeMapsModalButton = document.getElementById('closeMapsModalButton');
+        const viewMapLink = document.getElementById('viewMapLink'); // New map button in header
 
         // Function to show a custom modal message
         function showModal(message, isLoading = false) {
@@ -673,37 +690,14 @@
             loginModal.style.display = 'none';
             registerModal.style.display = 'none';
             forgotPasswordModal.style.display = 'none';
+            googleMapsModal.style.display = 'none'; // Also hide map modal
         }
 
-        // Event listeners for closing auth modals
+        // Event listeners for closing auth modals and map modal
         closeLoginModalButton.addEventListener('click', hideAllAuthModals);
         closeRegisterModalButton.addEventListener('click', hideAllAuthModals);
         closeForgotPasswordModalButton.addEventListener('click', hideAllAuthModals);
-
-        // Show/hide auth modals based on navigation
-        forgotPasswordLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            hideAllAuthModals();
-            forgotPasswordModal.style.display = 'flex';
-        });
-
-        showRegisterLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            hideAllAuthModals();
-            registerModal.style.display = 'flex';
-        });
-
-        showLoginLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            hideAllAuthModals();
-            loginModal.style.display = 'flex';
-        });
-
-        backToLoginLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            hideAllAuthModals();
-            loginModal.style.display = 'flex';
-        });
+        closeMapsModalButton.addEventListener('click', hideAllAuthModals); // Close map modal
 
         // Function to update authentication links in the header
         function updateAuthLinks(user) {
@@ -743,28 +737,76 @@
                     </li>
                 `;
                 // IMPORTANT: Re-attach event listeners for login/register links after they are recreated
-                document.getElementById('showLoginModalLink').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    hideAllAuthModals();
-                    loginModal.style.display = 'flex';
-                });
-                document.getElementById('showRegisterModalLink').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    hideAllAuthModals();
-                    registerModal.style.display = 'flex';
-                });
+                // These are now attached inside DOMContentLoaded
             }
+        }
+
+        // Google Maps Initialization (moved outside DOMContentLoaded to be callable by Google Maps API script)
+        let map;
+        function initMap() {
+            if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
+                console.warn('Google Maps API not loaded. Cannot initialize map.');
+                // showModal('Google Maps API failed to load. Please check your internet connection and API key.', false); // Don't show modal here to avoid multiple modals
+                return;
+            }
+
+            const india = { lat: 20.5937, lng: 78.9629 }; // Center of India
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: india,
+                zoom: 5, // Zoom level to show most of India
+            });
+            // Optional: Add a marker
+            new google.maps.Marker({
+                position: india,
+                map: map,
+                title: 'India'
+            });
         }
 
         // --- Firebase Initialization and Auth State Listener ---
         document.addEventListener('DOMContentLoaded', async function() {
             console.log('DOM Content Loaded: Script is running.');
 
+            // Get references to authentication UI elements (moved inside DOMContentLoaded)
+            const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+            const showRegisterLink = document.getElementById('showRegisterLink');
+            const showLoginLink = document.getElementById('showLoginLink');
+            const backToLoginLink = document.getElementById('backToLoginLink');
+
+            // Attach event listeners for auth modals here, after DOM is loaded
+            if (forgotPasswordLink) {
+                forgotPasswordLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    hideAllAuthModals();
+                    forgotPasswordModal.style.display = 'flex';
+                });
+            }
+
+            if (showRegisterLink) {
+                showRegisterLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    hideAllAuthModals();
+                    registerModal.style.display = 'flex';
+                });
+            }
+
+            if (showLoginLink) {
+                showLoginLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    hideAllAuthModals();
+                    loginModal.style.display = 'flex';
+                });
+            }
+
+            if (backToLoginLink) {
+                backToLoginLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    hideAllAuthModals();
+                    loginModal.style.display = 'flex';
+                });
+            }
+
             // Initialize Firebase if configuration is provided
-            // For Cloudflare Pages, you would typically set these as environment variables
-            // in the Pages project settings (e.g., FIREBASE_API_KEY, FIREBASE_AUTH_DOMAIN, etc.)
-            // and then construct the firebaseConfig object here from process.env.
-            // For this local file, we use LOCAL_FIREBASE_CONFIG.
             if (firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.authDomain) {
                 app = initializeApp(firebaseConfig);
                 auth = getAuth(app);
@@ -831,7 +873,7 @@
             const flightFromInput = document.getElementById('flightFrom');
             const flightToInput = document.getElementById('flightTo');
             const departureDateInput = document.getElementById('departureDate');
-            const returnDateInput = document.getElementById('returnDate'); // Corrected
+            const returnDateInput = document.getElementById('returnDate');
             const numPassengersInput = document.getElementById('numPassengers');
             const flightClassSelect = document.getElementById('flightClass');
             const flightResultsDiv = document.getElementById('flightResults');
@@ -920,6 +962,12 @@
             busBookingLink.addEventListener('click', (e) => { e.preventDefault(); showSection(busBookingSection); });
             taxiServicesLink.addEventListener('click', (e) => { e.preventDefault(); showSection(taxiServicesSection); });
             contactUsNavLink.addEventListener('click', (e) => { e.preventDefault(); showSection(contactUsSection); });
+            viewMapLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                hideAllAuthModals();
+                googleMapsModal.style.display = 'flex';
+                initMap(); // Initialize map when modal is shown
+            });
 
             // Updated About Us Link: Show detailed content in modal
             aboutUsLink.addEventListener('click', (e) => {
@@ -1153,7 +1201,7 @@
                                     <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Arrival</th>
                                     <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Duration</th>
                                     <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Availability</th>
-                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Fare</th>
+                                    <th class="py-3 px-4 text-sm text-gray-700 uppercase tracking-wider">Fare</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
@@ -1280,7 +1328,7 @@
                                     <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Arrival</th>
                                     <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Duration</th>
                                     <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Stops</th>
-                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Fare</th>
+                                    <th class="py-3 px-4 text-sm text-gray-700 uppercase tracking-wider">Fare</th>
                                     <th class="py-3 px-4 text-sm text-gray-700 uppercase tracking-wider">Availability</th>
                                 </tr>
                             </thead>
@@ -1328,7 +1376,7 @@
 
                 const yourAgentId = 'YOUR_AGENT_ID_HERE'; // Replace with your actual agent ID
                 // --- IMPORTANT: CLOUDFLARE WORKER URL ---
-                const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER URL HERE
+                const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER_API_URL HERE
 
                 const prompt = `Find buses from ${busFrom} to ${busTo} on ${busJourneyDate} for ${busPassengers} passenger(s). Agent ID: ${yourAgentId}. Provide the response in a structured JSON format with bus details like operator, busType, departureTime, arrivalTime, duration, fare, and availability (e.g., "AVAILABLE", "FULL"). If no buses are found, return an empty array.`;
 
@@ -1453,7 +1501,7 @@
 
                 const yourAgentId = 'YOUR_AGENT_ID_HERE'; // Replace with your actual agent ID
                 // --- IMPORTANT: CLOUDFLARE WORKER URL ---
-                const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER URL HERE
+                const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER_API_URL HERE
 
                 const prompt = `Find a ${taxiType} taxi from ${pickupLocation} to ${dropoffLocation} on ${pickupDate} at ${pickupTime}. Agent ID: ${yourAgentId}. Provide the response in a structured JSON format with taxi details like serviceProvider, vehicleType, estimatedFare, estimatedDuration, and availability (e.g., "AVAILABLE", "NOT_AVAILABLE"). If no taxis are found, return an empty array.`;
 
@@ -1671,6 +1719,8 @@
             });
         });
     </script>
-
+    <!-- Google Maps API Script -->
+    <!-- IMPORTANT: Replaced "YOUR_GOOGLE_MAPS_API_KEY" with your actual Google Maps API Key -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQ0ISKe34kx_2dSseZHrERQCr4eXhWocI&callback=initMap"></script>
 </body>
 </html>
