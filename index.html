@@ -125,13 +125,12 @@
 <body class="antialiased">
 
     <!-- Header Section -->
-    <header class="bg-gradient-to-r from-blue-700 to-blue-900 text-white shadow-lg">
-        <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
-            <!-- Website Title/Logo -->
-            <div class="text-3xl font-bold mb-4 md:mb-0">
-                <a href="index.html" id="siteLogoLink" class="hover:text-blue-200 transition duration-300">
-                    <!-- Removed the placeholder image as requested -->
-                    NinnysTravels.in
+    <header class="bg-white text-gray-800 shadow-lg">
+        <div class="container mx-auto px-4 py-20 flex flex-col md:flex-row justify-between items-center">
+            <!-- Website Title/Logo - Replaced text with image logo and increased size -->
+            <div class="mb-4 md:mb-0">
+                <a href="index.html" id="siteLogoLink" class="hover:opacity-80 transition duration-300">
+                    <img src="https://github.com/vinithjohnjeyaraj/ninnystravels/raw/main/logo.png" alt="NinnysTravels Logo" class="h-60 w-auto">
                 </a>
             </div>
 
@@ -139,11 +138,11 @@
             <nav>
                 <ul class="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-8 text-lg">
                     <li>
-                        <a href="index.html" id="homeLink" class="block py-2 px-4 rounded-full hover:bg-blue-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">HOME</a>
+                        <a href="index.html" id="homeLink" class="block py-2 px-4 rounded-full text-blue-700 hover:bg-blue-100 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">HOME</a>
                     </li>
                     <!-- BOOKINGS Dropdown -->
                     <li class="relative dropdown">
-                        <a href="#" class="block py-2 px-4 rounded-full hover:bg-blue-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">BOOKINGS</a>
+                        <a href="#" class="block py-2 px-4 rounded-full text-blue-700 hover:bg-blue-100 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">BOOKINGS</a>
                         <div class="dropdown-menu">
                             <a href="#" id="bookTrainLink" class="hover:bg-blue-800 transition duration-300 rounded-t-lg">BOOK TRAIN</a>
                             <a href="#" id="bookFlightsLink" class="hover:bg-blue-800 transition duration-300">BOOK FLIGHTS</a>
@@ -152,13 +151,13 @@
                         </div>
                     </li>
                     <li>
-                        <a href="#" id="contactUsLink" class="block py-2 px-4 rounded-full hover:bg-blue-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">CONTACT US</a>
+                        <a href="#" id="contactUsLink" class="block py-2 px-4 rounded-full text-blue-700 hover:bg-blue-100 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">CONTACT US</a>
                     </li>
                     <li>
-                        <a href="#" id="aboutUsLink" class="block py-2 px-4 rounded-full hover:bg-blue-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">ABOUT US</a>
+                        <a href="#" id="aboutUsLink" class="block py-2 px-4 rounded-full text-blue-700 hover:bg-blue-100 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">ABOUT US</a>
                     </li>
                     <li>
-                        <a href="#" id="viewMapLink" class="block py-2 px-4 rounded-full bg-blue-600 hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">VIEW MAP</a>
+                        <a href="#" id="viewMapLink" class="block py-2 px-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">VIEW MAP</a>
                     </li>
                     <!-- Authentication Links (Dynamic) -->
                     <li id="authLinksContainer" class="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-8 text-lg">
@@ -177,7 +176,8 @@
                 <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
                     Your Journey Starts Here
                 </h1>
-                <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
+                <!-- Added mt-12 to push this paragraph down -->
+                <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto mt-12">
                     Discover incredible destinations and seamless travel experiences with NinnysTravels.in.
                 </p>
                 <button id="startPlanningButton" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-orange-400 focus:ring-opacity-75">
@@ -523,12 +523,12 @@
     </section>
 
     <!-- Footer Section -->
-    <footer class="bg-gray-900 text-white py-8 mt-auto">
+    <footer class="bg-white text-gray-800 py-8 mt-auto">
         <div class="container mx-auto px-4 text-center text-sm">
             <p>&copy; 2025 NinnysTravels.in. All rights reserved.</p>
             <div class="mt-4 space-x-4">
-                <a href="#" class="hover:text-blue-300 transition duration-300">Privacy Policy</a>
-                <a href="#" class="hover:text-blue-300 transition duration-300">Terms of Service</a>
+                <a href="#" class="text-blue-600 hover:text-blue-800 transition duration-300">Privacy Policy</a>
+                <a href="#" class="text-blue-600 hover:text-blue-800 transition duration-300">Terms of Service</a>
             </div>
         </div>
     </footer>
@@ -778,10 +778,10 @@
                 const displayName = user.displayName || user.email || 'User';
                 authLinksContainer.innerHTML = `
                     <li>
-                        <span class="block py-2 px-4 text-white">Welcome, ${displayName}!</span>
+                        <span class="block py-2 px-4 text-gray-800">Welcome, ${displayName}!</span>
                     </li>
                     <li>
-                        <a href="#" id="logoutLink" class="block py-2 px-4 rounded-full bg-red-600 hover:bg-red-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75">LOGOUT</a>
+                        <a href="#" id="logoutLink" class="block py-2 px-4 rounded-full bg-red-600 hover:bg-red-700 text-white transition duration-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75">LOGOUT</a>
                     </li>
                 `;
                 // Re-attach event listener for logoutLink after it's recreated
@@ -800,10 +800,10 @@
                 userId = null;
                 authLinksContainer.innerHTML = `
                     <li>
-                        <a href="#" id="showLoginModalLink" class="block py-2 px-4 rounded-full hover:bg-blue-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">LOGIN</a>
+                        <a href="#" id="showLoginModalLink" class="block py-2 px-4 rounded-full text-blue-700 hover:bg-blue-100 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">LOGIN</a>
                     </li>
                     <li>
-                        <a href="#" id="showRegisterModalLink" class="block py-2 px-4 rounded-full bg-blue-600 hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">REGISTER</a>
+                        <a href="#" id="showRegisterModalLink" class="block py-2 px-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">REGISTER</a>
                     </li>
                 `;
                 // Re-attach event listeners for login/register links after they are recreated
