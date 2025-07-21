@@ -432,14 +432,9 @@
                 <div class="space-y-6 text-lg text-gray-700">
                     <p><strong>Company Name:</strong> NinnysTravels</p>
                     <p><strong>For Customer Support:</strong>
-                        <a href="mailto:support@ninnystravel.in" class="text-blue-600 hover:underline">support@ninnystravel.in</a>
+                        <a href="mailto:support@ninnystravels.in" class="text-blue-600 hover:underline">support@ninnystravels.in</a>
                     </p>
-                    <p><strong>Contact No:</strong>
-                        <a href="tel:+04400000000" class="text-blue-600 hover:underline">+044 00000000</a>
-                    </p>
-                    <p><strong>WhatsApp Only:</strong>
-                        <a href="https://wa.me/919962371745" target="_blank" class="text-green-600 hover:underline">9962371745</a>
-                    </p>
+                    <!-- Removed Contact No and WhatsApp Only as requested -->
                 </div>
 
                 <div class="mt-10">
@@ -664,9 +659,17 @@
         const closeMapsModalButton = document.getElementById('closeMapsModalButton');
         const viewMapLink = document.getElementById('viewMapLink'); // New map button in header
 
-        // Function to show a custom modal message
-        function showModal(message, isLoading = false) {
-            modalMessage.textContent = message;
+        // Function to show a custom modal message or image
+        function showModal(message, isLoading = false, imageUrl = null) {
+            modalMessage.textContent = ''; // Clear previous text
+            modalMessage.innerHTML = ''; // Clear previous HTML content
+
+            if (imageUrl) {
+                modalMessage.innerHTML = `<img src="${imageUrl}" alt="Generated image" class="max-w-full h-auto rounded-lg mx-auto shadow-lg">`;
+            } else {
+                modalMessage.textContent = message;
+            }
+
             if (isLoading) {
                 modalSpinner.classList.remove('hidden');
                 closeModalButton.classList.add('hidden'); // Hide close button during loading
@@ -993,7 +996,13 @@
                     <p class="text-gray-700 mt-4 text-left font-semibold">
                         Thank you for choosing NinnysTravels.in – where your adventure begins!
                     </p>
+                    <div class="mt-8">
+                        <button onclick="hideModal(); showMainContent();" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75">
+                            Return to Home Page
+                        </button>
+                    </div>
                 `;
+                showModal('', false); // Show empty modal initially
                 modalMessage.innerHTML = aboutUsContent; // Use innerHTML to render HTML content
                 modalSpinner.classList.add('hidden'); // Ensure spinner is hidden
                 closeModalButton.classList.remove('hidden'); // Ensure close button is visible
@@ -1007,7 +1016,7 @@
                 showSection(trainBookingSection); // Direct to train booking as a starting point
             });
 
-            // "Learn More" buttons for destinations functionality (now calls Cloudflare Worker)
+            // "Learn More" buttons for destinations functionality (now calls Cloudflare Worker for Image Generation)
             learnMoreDestinationButtons.forEach(button => {
                 button.addEventListener('click', async (e) => {
                     e.preventDefault();
@@ -1017,26 +1026,27 @@
                         return;
                     }
 
-                    showModal(`Generating travel details for ${city}...`, true);
+                    showModal(`Generating a thumbnail image for ${city}...`, true);
 
                     // --- IMPORTANT: CLOUDFLARE WORKER URL ---
                     // This is the URL of the Worker you deployed in Cloudflare.
-                    const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER URL HERE
+                    // Ensure your Worker is configured to handle image generation requests (e.g., routing to imagen-3.0-generate-002).
+                    const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev";
 
-                    const prompt = `Provide a detailed list of top tourist destinations and activities in ${city}. Include historical sites, cultural experiences, popular attractions, and brief descriptions for each. Format the response as a well-structured paragraph with key attractions highlighted.`;
+                    // Prompt for image generation
+                    const imagePrompt = `A beautiful, scenic, high-quality thumbnail image of a famous landmark or natural beauty in ${city}. Focus on a single iconic element.`;
 
-                    // Send the prompt to your Cloudflare Worker
                     const requestBodyForWorker = {
-                        prompt: prompt,
-                        responseMimeType: "text/plain"
-                        // Add responseSchema here if your Worker supports it for structured responses
+                        prompt: imagePrompt,
+                        model: "imagen-3.0-generate-002", // Explicitly request image generation model
+                        responseMimeType: "image/png" // Expecting image data
                     };
 
                     try {
                         const response = await fetch(WORKER_API_URL, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(requestBodyForWorker) // Send to Worker
+                            body: JSON.stringify(requestBodyForWorker)
                         });
 
                         if (!response.ok) {
@@ -1044,20 +1054,23 @@
                             throw new Error(`HTTP error! status: ${response.status}. Details: ${errorText}`);
                         }
 
-                        const result = await response.json(); // Worker returns the Gemini result
-                        let generatedText = "No information found for this destination.";
-                        if (result.candidates && result.candidates.length > 0 &&
-                            result.candidates[0].content && result.candidates[0].content.parts &&
-                            result.candidates[0].content.parts.length > 0) {
-                            generatedText = result.candidates[0].content.parts[0].text;
+                        const result = await response.json();
+                        let imageUrl = null;
+                        if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
+                            imageUrl = `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
                         }
 
                         hideModal();
-                        showModal(`**${city} - Tourist Destinations:**\n\n${generatedText}`, false);
+                        if (imageUrl) {
+                            showModal(`Thumbnail for ${city}:`, false, imageUrl);
+                        } else {
+                            showModal(`Failed to generate image for ${city}. No image data received.`, false);
+                        }
+
                     } catch (error) {
-                        console.error(`Error generating details for ${city}:`, error);
+                        console.error(`Error generating image for ${city}:`, error);
                         hideModal();
-                        showModal(`Failed to load details for ${city}. Please try again later. Error: ${error.message}. Please ensure your Cloudflare Worker is deployed and configured correctly.`, false);
+                        showModal(`Failed to generate image for ${city}. Please try again later. Error: ${error.message}. Ensure your Cloudflare Worker is deployed and configured correctly to handle image generation requests to imagen-3.0-generate-002.`, false);
                     }
                 });
             });
