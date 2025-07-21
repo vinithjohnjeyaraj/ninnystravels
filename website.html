@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NinnysTravels.in - Your Journey Starts Here</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Lighter, cleaner background */
+            color: #333;
+            min-height: 100vh; /* Ensure full viewport height for sticky footer */
+            display: flex;
+            flex-direction: column;
+        }
+        .hero-section {
+            /* Using a more vibrant placeholder image for a real-world feel */
+            background-image: url('https://placehold.co/1200x600/3b82f6/ffffff?text=Explore+The+World');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            color: white;
+            padding: 8rem 0;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.6); /* Slightly stronger shadow for readability */
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.45); /* Slightly darker overlay for better text contrast */
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+        /* Dropdown specific styles */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #1e40af; /* Deeper blue for dropdown background */
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.25); /* Slightly more prominent shadow */
+            z-index: 20;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        .dropdown-menu a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-menu a:hover {
+            background-color: #1c3a81; /* Even darker blue on hover */
+        }
+
+        /* Custom Modal Styles */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Slightly darker overlay */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2.5rem; /* Slightly more padding */
+            border-radius: 0.75rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
+            max-width: 450px; /* Slightly wider */
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: none;
+            border: none;
+            font-size: 1.75rem; /* Larger close button */
+            cursor: pointer;
+            color: #666;
+            transition: color 0.2s;
+        }
+        .modal-close-button:hover {
+            color: #333;
+        }
+
+        /* Contact Section Specific Style */
+        .contact-section-content {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            flex-direction: column; /* Allow content to stack */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-blue-700 to-blue-900 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
+            <!-- Website Title/Logo -->
+            <div class="text-3xl font-bold mb-4 md:mb-0">
+                <a href="#" id="siteLogoLink" class="hover:text-blue-200 transition duration-300">
+                    <!-- Logo image inserted here -->
+                    <img src="logo.jpg" onerror="this.onerror=null;this.src='https://placehold.co/150x50/3b82f6/ffffff?text=NinnysTravels';" alt="NinnysTravels.in Logo" class="h-10 w-auto rounded-md">
+                </a>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <nav>
+                <ul class="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-8 text-lg">
+                    <li>
+                        <a href="#" id="homeLink" class="block py-2 px-4 rounded-full hover:bg-blue-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">HOME</a>
+                    </li>
+                    <!-- BOOKINGS Dropdown -->
+                    <li class="relative dropdown">
+                        <a href="#" class="block py-2 px-4 rounded-full hover:bg-blue-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">BOOKINGS</a>
+                        <div class="dropdown-menu">
+                            <a href="#" id="bookTrainLink" class="hover:bg-blue-800 transition duration-300 rounded-t-lg">BOOK TRAIN</a>
+                            <a href="#" id="bookFlightsLink" class="hover:bg-blue-800 transition duration-300">BOOK FLIGHTS</a>
+                            <a href="#" id="busBookingLink" class="hover:bg-blue-800 transition duration-300">BUS BOOKING</a>
+                            <a href="#" id="taxiServicesLink" class="hover:bg-blue-800 transition duration-300 rounded-b-lg">TAXI SERVICES</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" id="contactUsLink" class="block py-2 px-4 rounded-full hover:bg-blue-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">CONTACT US</a>
+                    </li>
+                    <li>
+                        <a href="#" id="aboutUsLink" class="block py-2 px-4 rounded-full hover:bg-blue-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">ABOUT US</a>
+                    </li>
+                    <!-- Authentication Links (Dynamic) -->
+                    <li id="authLinksContainer" class="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-8 text-lg">
+                        <!-- Default links for logged-out state, populated by JS -->
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area (Hero + Featured Destinations) -->
+    <div id="mainContent" class="block">
+        <!-- Hero Section -->
+        <section class="hero-section text-center">
+            <div class="hero-content container mx-auto px-4">
+                <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
+                    Your Journey Starts Here
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
+                    Discover incredible destinations and seamless travel experiences with NinnysTravels.in.
+                </p>
+                <button id="startPlanningButton" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-orange-400 focus:ring-opacity-75">
+                    Start Planning Your Trip
+                </button>
+            </div>
+        </section>
+
+        <!-- Featured Destinations Section (Example Content) -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl font-bold mb-12 text-blue-800">Popular Destinations</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Destination Card 1 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300">
+                        <img src="https://placehold.co/600x400/a0aec0/ffffff?text=Paris" alt="Paris" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold mb-3 text-blue-700">Paris, France</h3>
+                            <p class="text-gray-700 mb-4">Experience the romance and iconic landmarks of the City of Lights.</p>
+                            <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Paris">Learn More</a>
+                        </div>
+                    </div>
+                    <!-- Destination Card 2 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300">
+                        <img src="https://placehold.co/600x400/81c784/ffffff?text=Tokyo" alt="Tokyo" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold mb-3 text-blue-700">Tokyo, Japan</h3>
+                            <p class="text-gray-700 mb-4">Dive into the vibrant culture and futuristic cityscape of Tokyo.</p>
+                            <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Tokyo">Learn More</a>
+                        </div>
+                    </div>
+                    <!-- Destination Card 3 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300">
+                        <img src="https://placehold.co/600x400/fbc02d/ffffff?text=Bali" alt="Bali" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold mb-3 text-blue-700">Bali, Indonesia</h3>
+                            <p class="text-gray-700 mb-4">Relax on pristine beaches and explore the spiritual side of Bali.</p>
+                            <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Bali">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Train Booking Section -->
+    <section id="trainBookingSection" class="hidden py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-8 text-blue-800 text-center">Book Your Train Journey</h2>
+
+            <form id="trainBookingForm" class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto mt-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="fromStation" class="block text-gray-700 text-lg font-medium mb-2">From Station:</label>
+                        <input type="text" id="fromStation" name="fromStation" placeholder="e.g., New Delhi (NDLS)" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="toStation" class="block text-gray-700 text-lg font-medium mb-2">To Station:</label>
+                        <input type="text" id="toStation" name="toStation" placeholder="e.g., Mumbai (BCT)" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="journeyDate" class="block text-gray-700 text-lg font-medium mb-2">Date of Journey:</label>
+                        <input type="date" id="journeyDate" name="journeyDate" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="travelClass" class="block text-gray-700 text-lg font-medium mb-2">Class:</label>
+                        <select id="travelClass" name="travelClass" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <option value="ALL">All Classes</option>
+                            <option value="1A">AC First Class (1A)</option>
+                            <option value="2A">AC 2 Tier (2A)</option>
+                            <option value="3A">AC 3 Tier (3A)</option>
+                            <option value="SL">Sleeper (SL)</option>
+                            <option value="CC">AC Chair Car (CC)</option>
+                            <option value="2S">Second Seating (2S)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="quota" class="block text-gray-700 text-lg font-medium mb-2">Quota:</label>
+                        <select id="quota" name="quota" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <option value="GN">General</option>
+                            <option value="CK">Tatkal</option>
+                            <option value="PT">Premium Tatkal</option>
+                            <option value="LD">Ladies</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75">
+                        Search Trains
+                    </button>
+                </div>
+            </form>
+
+            <!-- Train Search Results Display Area -->
+            <div id="trainResults" class="mt-12 p-6 bg-white rounded-xl shadow-lg hidden">
+                <h3 class="text-2xl font-semibold mb-6 text-blue-700 text-center">Available Trains</h3>
+                <div id="resultsContent" class="overflow-x-auto">
+                    <!-- Train results will be dynamically inserted here -->
+                    <p class="text-gray-600 text-center">No trains found for your search criteria.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flight Booking Section -->
+    <section id="flightBookingSection" class="hidden py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-8 text-blue-800 text-center">Book Your Flight</h2>
+
+            <form id="flightBookingForm" class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="flightFrom" class="block text-gray-700 text-lg font-medium mb-2">From:</label>
+                        <input type="text" id="flightFrom" name="flightFrom" placeholder="e.g., Delhi (DEL)" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="flightTo" class="block text-gray-700 text-lg font-medium mb-2">To:</label>
+                        <input type="text" id="flightTo" name="flightTo" placeholder="e.g., Mumbai (BOM)" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="departureDate" class="block text-gray-700 text-lg font-medium mb-2">Departure Date:</label>
+                        <input type="date" id="departureDate" name="departureDate" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="returnDate" class="block text-gray-700 text-lg font-medium mb-2">Return Date (Optional):</label>
+                        <input type="date" id="returnDate" name="returnDate" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="numPassengers" class="block text-gray-700 text-lg font-medium mb-2">Passengers:</label>
+                        <input type="number" id="numPassengers" name="numPassengers" value="1" min="1" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="flightClass" class="block text-gray-700 text-lg font-medium mb-2">Class:</label>
+                        <select id="flightClass" name="flightClass" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <option value="ECONOMY">Economy</option>
+                            <option value="PREMIUM_ECONOMY">Premium Economy</option>
+                            <option value="BUSINESS">Business</option>
+                            <option value="FIRST">First Class</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75">
+                        Search Flights
+                    </button>
+                </div>
+            </form>
+
+            <div id="flightResults" class="mt-12 p-6 bg-white rounded-xl shadow-lg hidden">
+                <h3 class="text-2xl font-semibold mb-6 text-blue-700 text-center">Available Flights</h3>
+                <div id="flightResultsContent" class="overflow-x-auto">
+                    <p class="text-gray-600 text-center">No flights found for your search criteria.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bus Booking Section -->
+    <section id="busBookingSection" class="hidden py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-8 text-blue-800 text-center">Book Your Bus Ticket</h2>
+
+            <form id="busBookingForm" class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="busFrom" class="block text-gray-700 text-lg font-medium mb-2">From City:</label>
+                        <input type="text" id="busFrom" name="busFrom" placeholder="e.g., Bangalore" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="busTo" class="block text-gray-700 text-lg font-medium mb-2">To City:</label>
+                        <input type="text" id="busTo" name="busTo" placeholder="e.g., Chennai" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="busJourneyDate" class="block text-gray-700 text-lg font-medium mb-2">Date of Journey:</label>
+                        <input type="date" id="busJourneyDate" name="busJourneyDate" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="busPassengers" class="block text-gray-700 text-lg font-medium mb-2">Passengers:</label>
+                        <input type="number" id="busPassengers" name="busPassengers" value="1" min="1" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75">
+                        Search Buses
+                    </button>
+                </div>
+            </form>
+
+            <div id="busResults" class="mt-12 p-6 bg-white rounded-xl shadow-lg hidden">
+                <h3 class="text-2xl font-semibold mb-6 text-blue-700 text-center">Available Buses</h3>
+                <div id="busResultsContent" class="overflow-x-auto">
+                    <p class="text-gray-600 text-center">No buses found for your search criteria.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Taxi Services Section -->
+    <section id="taxiServicesSection" class="hidden py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-8 text-blue-800 text-center">Book a Taxi</h2>
+
+            <form id="taxiBookingForm" class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="pickupLocation" class="block text-gray-700 text-lg font-medium mb-2">Pickup Location:</label>
+                        <input type="text" id="pickupLocation" name="pickupLocation" placeholder="e.g., Airport, Hotel Name" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="dropoffLocation" class="block text-gray-700 text-lg font-medium mb-2">Drop-off Location:</label>
+                        <input type="text" id="dropoffLocation" name="dropoffLocation" placeholder="e.g., Destination Address" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="pickupDate" class="block text-gray-700 text-lg font-medium mb-2">Pickup Date:</label>
+                        <input type="date" id="pickupDate" name="pickupDate" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="pickupTime" class="block text-gray-700 text-lg font-medium mb-2">Pickup Time:</label>
+                        <input type="time" id="pickupTime" name="pickupTime" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="taxiType" class="block text-gray-700 text-lg font-medium mb-2">Taxi Type:</label>
+                        <select id="taxiType" name="taxiType" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <option value="SEDAN">Sedan</option>
+                            <option value="SUV">SUV</option>
+                            <option value="LUXURY">Luxury</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75">
+                        Search Taxis
+                    </button>
+                </div>
+            </form>
+
+            <div id="taxiResults" class="mt-12 p-6 bg-white rounded-xl shadow-lg hidden">
+                <h3 class="text-2xl font-semibold mb-6 text-blue-700 text-center">Available Taxis</h3>
+                <div id="taxiResultsContent" class="overflow-x-auto">
+                    <p class="text-gray-600 text-center">No taxis found for your search criteria.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contactUsSection" class="hidden py-16 bg-gray-50 flex-grow">
+        <div class="container mx-auto px-4 contact-section-content">
+            <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg max-w-lg w-full text-center mb-8">
+                <h2 class="text-4xl font-bold mb-8 text-blue-800">Contact Us</h2>
+
+                <div class="space-y-6 text-lg text-gray-700">
+                    <p><strong>Company Name:</strong> NinnysTravels</p>
+                    <p><strong>For Customer Support:</strong>
+                        <a href="mailto:support@ninnystravel.in" class="text-blue-600 hover:underline">support@ninnystravel.in</a>
+                    </p>
+                    <p><strong>Contact No:</strong>
+                        <a href="tel:+04400000000" class="text-blue-600 hover:underline">+044 00000000</a>
+                    </p>
+                    <p><strong>WhatsApp Only:</strong>
+                        <a href="https://wa.me/919962371745" target="_blank" class="text-green-600 hover:underline">9962371745</a>
+                    </p>
+                </div>
+
+                <div class="mt-10">
+                    <p class="text-gray-600">We are here to help you with all your travel needs!</p>
+                </div>
+                <div class="mt-8">
+                    <a href="#" id="contactUsBackToHome" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75">Back to Home</a>
+                </div>
+            </div>
+
+            <!-- New Contact Form Section -->
+            <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg max-w-lg w-full text-center mt-8">
+                <h3 class="text-3xl font-bold mb-8 text-blue-800">Send Us a Message</h3>
+                <form id="customerQueryForm" class="space-y-6">
+                    <div>
+                        <label for="customerName" class="sr-only">Your Name</label>
+                        <input type="text" id="customerName" name="customerName" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="customerEmail" class="sr-only">Your Email</label>
+                        <input type="email" id="customerEmail" name="customerEmail" placeholder="Your Email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="querySubject" class="sr-only">Subject</label>
+                        <input type="text" id="querySubject" name="querySubject" placeholder="Subject" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="queryMessage" class="sr-only">Your Message/Complaint</label>
+                        <textarea id="queryMessage" name="queryMessage" rows="6" placeholder="Your Message or Complaint" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-orange-400 focus:ring-opacity-75">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Call to Action Section -->
+    <section class="bg-blue-800 text-white py-16 text-center">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-6">Ready to Plan Your Next Adventure?</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">
+                Our expert travel agents are here to help you craft the perfect itinerary, tailored to your dreams and budget.
+            </p>
+            <button id="getFreeQuoteButton" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-orange-400 focus:ring-opacity-75">
+                Get a Free Quote
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-white py-8 mt-auto">
+        <div class="container mx-auto px-4 text-center text-sm">
+            <p>&copy; 2025 NinnysTravels.in. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="hover:text-blue-300 transition duration-300">Privacy Policy</a>
+                <a href="#" class="hover:text-blue-300 transition duration-300">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Message Modal -->
+    <div id="messageModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" id="closeModalButton">&times;</button>
+            <p id="modalMessage" class="text-lg font-semibold text-gray-800"></p>
+            <div id="modalSpinner" class="hidden mt-4">
+                <svg class="animate-spin h-8 w-8 text-blue-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" id="closeLoginModalButton">&times;</button>
+            <h3 class="text-3xl font-bold mb-6 text-blue-800">Login</h3>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <input type="email" id="loginEmail" placeholder="Email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <div>
+                    <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300">Login</button>
+            </form>
+            <p class="mt-4 text-gray-600">
+                <a href="#" id="forgotPasswordLink" class="text-blue-600 hover:underline">Forgot Password?</a>
+            </p>
+            <div class="mt-6 border-t border-gray-200 pt-6">
+                <button id="googleSignInButton" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full text-lg flex items-center justify-center space-x-2 transition duration-300">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.35-7.439-7.474s3.345-7.474 7.439-7.474c2.395 0 4.01.983 4.901 1.852l3.292-3.292c-2.965-2.887-7.147-4.725-11.493-4.725C5.239 0 0 5.198 0 12s5.239 12 12.24 12c6.644 0 11.21-4.607 11.21-11.659 0-.756-.075-1.47-.202-2.165H12.24z"/>
+                    </svg>
+                    <span>Sign in with Google</span>
+                </button>
+            </div>
+            <p class="mt-4 text-gray-600">
+                Don't have an account? <a href="#" id="showRegisterLink" class="text-blue-600 hover:underline">Register here</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" id="closeRegisterModalButton">&times;</button>
+            <h3 class="text-3xl font-bold mb-6 text-blue-800">Register</h3>
+            <form id="registerForm" class="space-y-4">
+                <div>
+                    <input type="text" id="registerName" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <div>
+                    <input type="email" id="registerEmail" placeholder="Email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <div>
+                    <input type="password" id="registerPassword" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300">Register</button>
+            </form>
+            <p class="mt-4 text-gray-600">
+                Already have an account? <a href="#" id="showLoginLink" class="text-blue-600 hover:underline">Login here</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" id="closeForgotPasswordModalButton">&times;</button>
+            <h3 class="text-3xl font-bold mb-6 text-blue-800">Forgot Password</h3>
+            <p class="mb-4 text-gray-700">Enter your email address to receive a password reset link.</p>
+            <form id="forgotPasswordForm" class="space-y-4">
+                <div>
+                    <input type="email" id="forgotEmail" placeholder="Email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300">Send Reset Link</button>
+            </form>
+            <p class="mt-4 text-gray-600">
+                <a href="#" id="backToLoginLink" class="text-blue-600 hover:underline">Back to Login</a>
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // --- Firebase Configuration (for local testing or if not using Cloudflare Identity) ---
+        // If you are using Cloudflare Pages and want Firebase Auth to work, you'll need to
+        // set these as environment variables in Cloudflare Pages build settings.
+        // For local testing, replace placeholders with your actual Firebase project config.
+        const LOCAL_FIREBASE_CONFIG = {
+            apiKey: "YOUR_FIREBASE_WEB_API_KEY", // Replace with your Firebase Web API Key
+            authDomain: "your-project-id.firebaseapp.com", // Replace with your Firebase Auth Domain
+            projectId: "your-project-id", // Replace with your Firebase Project ID
+            storageBucket: "your-project-id.appspot.com", // Replace with your Firebase Storage Bucket
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID", // Replace with your Firebase Messaging Sender ID
+            appId: "YOUR_FIREBASE_APP_ID" // Replace with your Firebase App ID
+        };
+        // --- END Firebase Config ---
+
+        // These variables are for Firebase initialization.
+        // For Cloudflare Pages, these would ideally come from environment variables.
+        // For local testing, they use the hardcoded LOCAL_FIREBASE_CONFIG.
+        const appId = "local-travel-app"; // A dummy app ID for local use
+        const firebaseConfig = LOCAL_FIREBASE_CONFIG;
+        const initialAuthToken = null; // No custom token for local anonymous sign-in
+
+        let app;
+        let auth;
+        let db;
+        let userId = null; // To store the current user's ID
+
+        // Get references to authentication UI elements
+        const authLinksContainer = document.getElementById('authLinksContainer');
+        const loginModal = document.getElementById('loginModal');
+        const registerModal = document.getElementById('registerModal');
+        const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+
+        const closeLoginModalButton = document.getElementById('closeLoginModalButton');
+        const closeRegisterModalButton = document.getElementById('closeRegisterModalButton');
+        const closeForgotPasswordModalButton = document.getElementById('closeForgotPasswordModalButton');
+
+        const loginForm = document.getElementById('loginForm');
+        const loginEmailInput = document.getElementById('loginEmail');
+        const loginPasswordInput = document.getElementById('loginPassword');
+        const googleSignInButton = document.getElementById('googleSignInButton');
+        const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+        const showRegisterLink = document.getElementById('showRegisterLink');
+
+        const registerForm = document.getElementById('registerForm');
+        const registerNameInput = document.getElementById('registerName');
+        const registerEmailInput = document.getElementById('registerEmail');
+        const registerPasswordInput = document.getElementById('registerPassword');
+        const showLoginLink = document.getElementById('showLoginLink');
+
+        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+        const forgotEmailInput = document.getElementById('forgotEmail');
+        const backToLoginLink = document.getElementById('backToLoginLink');
+
+        // Get references to message modal elements (from existing script)
+        const messageModal = document.getElementById('messageModal');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalSpinner = document.getElementById('modalSpinner');
+        const closeModalButton = document.getElementById('closeModalButton');
+
+        // Function to show a custom modal message
+        function showModal(message, isLoading = false) {
+            modalMessage.textContent = message;
+            if (isLoading) {
+                modalSpinner.classList.remove('hidden');
+                closeModalButton.classList.add('hidden'); // Hide close button during loading
+            } else {
+                modalSpinner.classList.add('hidden');
+                closeModalButton.classList.remove('hidden'); // Show close button when not loading
+            }
+            messageModal.style.display = 'flex'; // Use flex to center
+        }
+
+        // Function to hide the custom modal
+        function hideModal() {
+            messageModal.style.display = 'none';
+        }
+
+        // Event listener for closing the main message modal
+        closeModalButton.addEventListener('click', hideModal);
+
+        // Function to hide all auth modals
+        function hideAllAuthModals() {
+            loginModal.style.display = 'none';
+            registerModal.style.display = 'none';
+            forgotPasswordModal.style.display = 'none';
+        }
+
+        // Event listeners for closing auth modals
+        closeLoginModalButton.addEventListener('click', hideAllAuthModals);
+        closeRegisterModalButton.addEventListener('click', hideAllAuthModals);
+        closeForgotPasswordModalButton.addEventListener('click', hideAllAuthModals);
+
+        // Show/hide auth modals based on navigation
+        forgotPasswordLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            hideAllAuthModals();
+            forgotPasswordModal.style.display = 'flex';
+        });
+
+        showRegisterLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            hideAllAuthModals();
+            registerModal.style.display = 'flex';
+        });
+
+        showLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            hideAllAuthModals();
+            loginModal.style.display = 'flex';
+        });
+
+        backToLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            hideAllAuthModals();
+            loginModal.style.display = 'flex';
+        });
+
+        // Function to update authentication links in the header
+        function updateAuthLinks(user) {
+            authLinksContainer.innerHTML = ''; // Clear existing links
+            if (user) {
+                // User is signed in
+                userId = user.uid;
+                const displayName = user.displayName || user.email || 'User';
+                authLinksContainer.innerHTML = `
+                    <li>
+                        <span class="block py-2 px-4 text-white">Welcome, ${displayName}!</span>
+                    </li>
+                    <li>
+                        <a href="#" id="logoutLink" class="block py-2 px-4 rounded-full bg-red-600 hover:bg-red-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75">LOGOUT</a>
+                    </li>
+                `;
+                // IMPORTANT: Re-attach event listener for logoutLink after it's recreated
+                document.getElementById('logoutLink').addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    try {
+                        await signOut(auth);
+                        showModal('You have been logged out.', false);
+                    } catch (error) {
+                        console.error('Logout error:', error);
+                        showModal('Logout failed. Please try again.', false);
+                    }
+                });
+            } else {
+                // User is signed out
+                userId = null;
+                authLinksContainer.innerHTML = `
+                    <li>
+                        <a href="#" id="showLoginModalLink" class="block py-2 px-4 rounded-full hover:bg-blue-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">LOGIN</a>
+                    </li>
+                    <li>
+                        <a href="#" id="showRegisterModalLink" class="block py-2 px-4 rounded-full bg-blue-600 hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">REGISTER</a>
+                    </li>
+                `;
+                // IMPORTANT: Re-attach event listeners for login/register links after they are recreated
+                document.getElementById('showLoginModalLink').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    hideAllAuthModals();
+                    loginModal.style.display = 'flex';
+                });
+                document.getElementById('showRegisterModalLink').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    hideAllAuthModals();
+                    registerModal.style.display = 'flex';
+                });
+            }
+        }
+
+        // --- Firebase Initialization and Auth State Listener ---
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('DOM Content Loaded: Script is running.');
+
+            // Initialize Firebase if configuration is provided
+            // For Cloudflare Pages, you would typically set these as environment variables
+            // in the Pages project settings (e.g., FIREBASE_API_KEY, FIREBASE_AUTH_DOMAIN, etc.)
+            // and then construct the firebaseConfig object here from process.env.
+            // For this local file, we use LOCAL_FIREBASE_CONFIG.
+            if (firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.authDomain) {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                // Sign in anonymously for local testing if no custom token
+                try {
+                    await signInAnonymously(auth);
+                    console.log('Signed in anonymously for local testing.');
+                } catch (anonError) {
+                    console.error('Error signing in anonymously:', anonError);
+                    showModal('Authentication failed. Please refresh the page.', false);
+                }
+
+                // Listen for authentication state changes
+                onAuthStateChanged(auth, (user) => {
+                    updateAuthLinks(user); // This will now correctly attach listeners
+                    if (user) {
+                        userId = user.uid;
+                        console.log('Auth state changed: User is logged in with UID:', userId);
+                        // You can now safely perform Firestore operations using `userId`
+                    } else {
+                        userId = null;
+                        console.log('Auth state changed: User is logged out.');
+                    }
+                });
+
+            } else {
+                console.warn('Firebase config incomplete. Authentication features will not work.');
+                showModal('Firebase configuration is incomplete. Login/Register features will not function. Please paste your actual Firebase config into the LOCAL_FIREBASE_CONFIG object in the HTML file for local testing, or configure environment variables on your hosting platform.', false);
+                // Ensure auth links are set to logged-out state if Firebase config is missing
+                updateAuthLinks(null);
+            }
+
+            // Get references to all main sections
+            const mainContent = document.getElementById('mainContent');
+            const trainBookingSection = document.getElementById('trainBookingSection');
+            const flightBookingSection = document.getElementById('flightBookingSection');
+            const busBookingSection = document.getElementById('busBookingSection');
+            const taxiServicesSection = document.getElementById('taxiServicesSection');
+            const contactUsSection = document.getElementById('contactUsSection');
+
+            // Get references to navigation links
+            const siteLogoLink = document.getElementById('siteLogoLink');
+            const homeLink = document.getElementById('homeLink');
+            const bookTrainLink = document.getElementById('bookTrainLink');
+            const bookFlightsLink = document.getElementById('bookFlightsLink');
+            const busBookingLink = document.getElementById('busBookingLink');
+            const taxiServicesLink = document.getElementById('taxiServicesLink');
+            const contactUsNavLink = document.getElementById('contactUsLink');
+            const aboutUsLink = document.getElementById('aboutUsLink'); // Get the About Us link
+
+            // Get references to booking form elements
+            const trainBookingForm = document.getElementById('trainBookingForm');
+            const fromStationInput = document.getElementById('fromStation');
+            const toStationInput = document.getElementById('toStation');
+            const journeyDateInput = document.getElementById('journeyDate');
+            const travelClassSelect = document.getElementById('travelClass');
+            const quotaSelect = document.getElementById('quota');
+            const trainResultsDiv = document.getElementById('trainResults');
+            const resultsContentDiv = document.getElementById('resultsContent');
+
+            const flightBookingForm = document.getElementById('flightBookingForm');
+            const flightFromInput = document.getElementById('flightFrom');
+            const flightToInput = document.getElementById('flightTo');
+            const departureDateInput = document.getElementById('departureDate');
+            const returnDateInput = document.getElementById('returnDate');
+            const numPassengersInput = document.getElementById('numPassengers');
+            const flightClassSelect = document.getElementById('flightClass');
+            const flightResultsDiv = document.getElementById('flightResults');
+            const flightResultsContentDiv = document.getElementById('flightResultsContent');
+
+            const busBookingForm = document.getElementById('busBookingForm');
+            const busFromInput = document.getElementById('busFrom');
+            const busToInput = document.getElementById('busTo');
+            const busJourneyDateInput = document.getElementById('busJourneyDate');
+            const busPassengersInput = document.getElementById('busPassengers');
+            const busResultsDiv = document.getElementById('busResults');
+            const busResultsContentDiv = document.getElementById('busResultsContent');
+
+            const taxiBookingForm = document.getElementById('taxiBookingForm');
+            const pickupLocationInput = document.getElementById('pickupLocation');
+            const dropoffLocationInput = document.getElementById('dropoffLocation');
+            const pickupDateInput = document.getElementById('pickupDate');
+            const pickupTimeInput = document.getElementById('pickupTime');
+            const taxiTypeSelect = document.getElementById('taxiType');
+            const taxiResultsDiv = document.getElementById('taxiResults');
+            const taxiResultsContentDiv = document.getElementById('taxiResultsContent');
+
+            // Get references to contact us specific elements
+            const contactUsBackToHome = document.getElementById('contactUsBackToHome');
+            const customerQueryForm = document.getElementById('customerQueryForm');
+            const customerNameInput = document.getElementById('customerName');
+            const customerEmailInput = document.getElementById('customerEmail');
+            const querySubjectInput = document.getElementById('querySubject');
+            const queryMessageTextarea = document.getElementById('queryMessage');
+
+            // New: Get reference to the "Start Planning Your Trip" button
+            const startPlanningButton = document.getElementById('startPlanningButton');
+            // New: Get all "Learn More" buttons for destinations
+            const learnMoreDestinationButtons = document.querySelectorAll('.learn-more-destination');
+            // New: Get "Get a Free Quote" button
+            const getFreeQuoteButton = document.getElementById('getFreeQuoteButton');
+
+
+            // Function to hide all booking/contact sections and show main content
+            function showMainContent() {
+                trainBookingSection.classList.add('hidden');
+                flightBookingSection.classList.add('hidden');
+                busBookingSection.classList.add('hidden');
+                taxiServicesSection.classList.add('hidden');
+                contactUsSection.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+                window.scrollTo(0, 0); // Scroll to top of the page
+            }
+
+            // Function to hide all sections and show a specific one
+            function showSection(sectionToShow) {
+                mainContent.classList.add('hidden');
+                trainBookingSection.classList.add('hidden');
+                flightBookingSection.classList.add('hidden');
+                busBookingSection.classList.add('hidden');
+                taxiServicesSection.classList.add('hidden');
+                contactUsSection.classList.add('hidden');
+                hideAllAuthModals(); // Hide any open auth modals
+                sectionToShow.classList.remove('hidden');
+                window.scrollTo(0, 0); // Scroll to top of the page
+            }
+
+            // Set min date for date inputs to today
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const todayFormatted = `${yyyy}-${mm}-${dd}`;
+
+            journeyDateInput.min = todayFormatted;
+            journeyDateInput.value = todayFormatted;
+            departureDateInput.min = todayFormatted;
+            departureDateInput.value = todayFormatted;
+            returnDateInput.min = todayFormatted;
+            busJourneyDateInput.min = todayFormatted;
+            busJourneyDateInput.value = todayFormatted;
+            pickupDateInput.min = todayFormatted;
+            pickupDateInput.value = pickupDateInput.value || todayFormatted;
+
+
+            // --- Navigation Link Event Listeners ---
+            siteLogoLink.addEventListener('click', (e) => { e.preventDefault(); showMainContent(); });
+            homeLink.addEventListener('click', (e) => { e.preventDefault(); showMainContent(); });
+            bookTrainLink.addEventListener('click', (e) => { e.preventDefault(); showSection(trainBookingSection); });
+            bookFlightsLink.addEventListener('click', (e) => { e.preventDefault(); showSection(flightBookingSection); });
+            busBookingLink.addEventListener('click', (e) => { e.preventDefault(); showSection(busBookingSection); });
+            taxiServicesLink.addEventListener('click', (e) => { e.preventDefault(); showSection(taxiServicesSection); });
+            contactUsNavLink.addEventListener('click', (e) => { e.preventDefault(); showSection(contactUsSection); });
+
+            // Updated About Us Link: Show detailed content in modal
+            aboutUsLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                const aboutUsContent = `
+                    <h3 class="text-2xl font-bold mb-4 text-blue-800">About NinnysTravels.in</h3>
+                    <p class="text-gray-700 mb-4 text-left">
+                        Welcome to NinnysTravels.in, your trusted partner in crafting unforgettable journeys.
+                        We are a dedicated team of travel enthusiasts committed to providing seamless and enriching
+                        travel experiences across India and beyond.
+                    </p>
+                    <p class="text-gray-700 mb-4 text-left">
+                        Our mission is to make travel accessible, enjoyable, and stress-free. From booking trains,
+                        flights, and buses to arranging comfortable taxi services, we cover all aspects of your travel
+                        needs with precision and care. We believe every journey tells a story, and we are here to
+                        help you write yours.
+                    </p>
+                    <p class="text-gray-700 text-left">
+                        With years of experience in the travel industry, we pride ourselves on our personalized service,
+                        attention to detail, and commitment to customer satisfaction. Let us take care of the logistics,
+                        so you can focus on making memories.
+                    </p>
+                    <p class="text-gray-700 mt-4 text-left font-semibold">
+                        Thank you for choosing NinnysTravels.in – where your adventure begins!
+                    </p>
+                `;
+                modalMessage.innerHTML = aboutUsContent; // Use innerHTML to render HTML content
+                modalSpinner.classList.add('hidden'); // Ensure spinner is hidden
+                closeModalButton.classList.remove('hidden'); // Ensure close button is visible
+                messageModal.style.display = 'flex';
+            });
+
+
+            // "Start Planning Your Trip" button functionality
+            startPlanningButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection(trainBookingSection); // Direct to train booking as a starting point
+            });
+
+            // "Learn More" buttons for destinations functionality (now calls Cloudflare Worker)
+            learnMoreDestinationButtons.forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    const city = button.dataset.city; // Get city from data-city attribute
+                    if (!city) {
+                        showModal('Could not determine destination city.', false);
+                        return;
+                    }
+
+                    showModal(`Generating travel details for ${city}...`, true);
+
+                    // --- IMPORTANT: CLOUDFLARE WORKER URL ---
+                    // This is the URL of the Worker you deployed in Cloudflare.
+                    const WORKER_API_URL = "https://shrill-glade-3b75.vinithjohnjeyaraj.workers.dev"; // <--- YOUR WORKER URL HERE
+
+                    const prompt = `Provide a detailed list of top tourist destinations and activities in ${city}. Include historical sites, cultural experiences, popular attractions, and brief descriptions for each. Format the response as a well-structured paragraph with key attractions highlighted.`;
+
+                    // Send the prompt to your Cloudflare Worker
+                    const requestBodyForWorker = {
+                        prompt: prompt,
+                        responseMimeType: "text/plain"
+                        // Add responseSchema here if your Worker supports it for structured responses
+                    };
+
+                    try {
+                        const response = await fetch(WORKER_API_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(requestBodyForWorker) // Send to Worker
+                        });
+
+                        if (!response.ok) {
+                            const errorText = await response.text();
+                            throw new Error(`HTTP error! status: ${response.status}. Details: ${errorText}`);
+                        }
+
+                        const result = await response.json(); // Worker returns the Gemini result
+                        let generatedText = "No information found for this destination.";
+                        if (result.candidates && result.candidates.length > 0 &&
+                            result.candidates[0].content && result.candidates[0].content.parts &&
+                            result.candidates[0].content.parts.length > 0) {
+                            generatedText = result.candidates[0].content.parts[0].text;
+                        }
+
+                        hideModal();
+                        showModal(`**${city} - Tourist Destinations:**\n\n${generatedText}`, false);
+                    } catch (error) {
+                        console.error(`Error generating details for ${city}:`, error);
+                        hideModal();
+                        showModal(`Failed to load details for ${city}. Please try again later. Error: ${error.message}. Please ensure your Cloudflare Worker is deployed and configured correctly.`, false);
+                    }
+                });
+            });
+
+            // "Get a Free Quote" button functionality
+            if (getFreeQuoteButton) {
+                getFreeQuoteButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showSection(contactUsSection); // Navigate to the Contact Us section
+                });
+            }
+
+            // --- Contact Us "Back to Home" button ---
+            if (contactUsBackToHome) {
+                contactUsBackToHome.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showMainContent();
+                });
+            }
+
+            // --- Customer Query Form Submission ---
+            customerQueryForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                const customerName = customerNameInput.value.trim();
+                const customerEmail = customerEmailInput.value.trim();
+                const querySubject = querySubjectInput.value.trim();
+                const queryMessage = queryMessageTextarea.value.trim();
+
+                if (!customerName || !customerEmail || !querySubject || !queryMessage) {
+                    showModal('Please fill in all fields to send your message.');
+                    return;
+                }
+
+                showModal('Sending your message...', true);
+
+                // Simulate API call or server-side processing
+                await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate network delay
+
+                hideModal();
+                showModal('Your message has been received! In a real website, this message would now be sent to the travel agent\'s email via a server-side process. Thank you for your feedback.', false);
+                customerQueryForm.reset(); // Clear form fields after "sending"
+
+            });
+
+
+            // --- Train Booking Form Submission ---
+            trainBookingForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                const fromStation = fromStationInput.value.trim();
+                const toStation = toStationInput.value.trim();
+                const journeyDate = journeyDateInput.value;
+                const travelClass = travelClassSelect.value;
+                const quota = quotaSelect.value;
+
+                if (!fromStation || !toStation || !journeyDate) {
+                    showModal('Please fill in all required fields (From Station, To Station, Date of Journey).');
+                    return;
+                }
+
+                showModal('Searching for trains...', true);
+
+                const yourAgentId = 'YOUR_AGENT_ID_HERE'; // Replace with your actual agent ID
+                // --- IMPORTANT: CLOUDFLARE WORKER URL ---
+                const WORKER_API_URL = "https://shrill-glade-3b75.vinithjohnjeyaraj.workers.dev"; // <--- YOUR WORKER URL HERE
+
+                const prompt = `Find trains from ${fromStation} to ${toStation} on ${journeyDate} for ${travelClass} class under ${quota} quota. Agent ID: ${yourAgentId}. Provide the response in a structured JSON format with train details like trainName, trainNumber, departureTime, arrivalTime, duration, availability (e.g., "AVAILABLE", "WAITLIST"), and fare. If no trains are found, return an empty array.`;
+
+                const requestBodyForWorker = {
+                    prompt: prompt,
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "ARRAY",
+                        items: {
+                            type: "OBJECT",
+                            properties: {
+                                "trainName": { "type": "STRING" },
+                                "trainNumber": { "type": "STRING" },
+                                "departureTime": { "type": "STRING" },
+                                "arrivalTime": { "type": "STRING" },
+                                "duration": { "type": "STRING" },
+                                "availability": { "type": "STRING" },
+                                "fare": { "type": "NUMBER" }
+                            },
+                            "propertyOrdering": ["trainName", "trainNumber", "departureTime", "arrivalTime", "duration", "availability", "fare"]
+                        }
+                    }
+                };
+
+                try {
+                    const response = await fetch(WORKER_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(requestBodyForWorker)
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! status: ${response.status}. Details: ${errorText}`);
+                    }
+
+                    const result = await response.json();
+                    let trains = [];
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        try {
+                            const jsonString = result.candidates[0].content.parts[0].text;
+                            trains = JSON.parse(jsonString);
+                        } catch (parseError) {
+                            console.error('Error parsing JSON response from Worker:', parseError);
+                            showModal('Failed to parse train data from AI. Please try again or check AI response format.');
+                            return;
+                        }
+                    }
+                    displayTrainResults(trains);
+                    hideModal();
+                    showModal('Train search complete!', false);
+
+                } catch (error) {
+                    console.error('Error searching trains:', error);
+                    hideModal();
+                    showModal('Failed to search trains. Please try again later. Error: ' + error.message, false);
+                }
+            });
+
+            // Function to display train results
+            function displayTrainResults(trains) {
+                resultsContentDiv.innerHTML = '';
+                trainResultsDiv.classList.remove('hidden');
+
+                if (trains && trains.length > 0) {
+                    let tableHtml = `
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
+                            <thead class="bg-blue-100">
+                                <tr>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Train Name</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Train No.</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Departure</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Arrival</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Duration</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Availability</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Fare</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                    `;
+                    trains.forEach(train => {
+                        tableHtml += `
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-3 px-4 text-sm text-gray-800">${train.trainName || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">${train.trainNumber || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">${train.departureTime || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">${train.arrivalTime || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">${train.duration || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800 ${train.availability === 'AVAILABLE' ? 'text-green-600 font-medium' : 'text-red-600 font-medium'}">${train.availability || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">₹${(train.fare || 0).toFixed(2)}</td>
+                            </tr>
+                        `;
+                    });
+                    tableHtml += `
+                            </tbody>
+                        </table>
+                    `;
+                    resultsContentDiv.innerHTML = tableHtml;
+                } else {
+                    resultsContentDiv.innerHTML = '<p class="text-gray-600 text-center">No trains found for your search criteria. Please try different details.</p>';
+                }
+            }
+
+            // --- Flight Booking Form Submission ---
+            flightBookingForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                const flightFrom = flightFromInput.value.trim();
+                const flightTo = flightToInput.value.trim();
+                const departureDate = departureDateInput.value;
+                const returnDate = returnDateInput.value;
+                const numPassengers = numPassengersInput.value;
+                const flightClass = flightClassSelect.value;
+
+                if (!flightFrom || !flightTo || !departureDate || !numPassengers) {
+                    showModal('Please fill in all required fields (From, To, Departure Date, Passengers).');
+                    return;
+                }
+
+                showModal('Searching for flights...', true);
+
+                const yourAgentId = 'YOUR_AGENT_ID_HERE'; // Replace with your actual agent ID
+                // --- IMPORTANT: CLOUDFLARE WORKER URL ---
+                const WORKER_API_URL = "https://shrill-glade-3b75.vinithjohnjeyaraj.workers.dev"; // <--- YOUR WORKER URL HERE
+
+                const prompt = `Find flights from ${flightFrom} to ${flightTo} departing on ${departureDate} ${returnDate ? 'and returning on ' + returnDate : ''} for ${numPassengers} passenger(s) in ${flightClass} class. Agent ID: ${yourAgentId}. Provide the response in a structured JSON format with flight details like airline, flightNumber, departureTime, arrivalTime, duration, stops, fare, and availability (e.g., "AVAILABLE", "SOLD_OUT"). If no flights are found, return an empty array.`;
+
+                const requestBodyForWorker = {
+                    prompt: prompt,
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "ARRAY",
+                        items: {
+                            type: "OBJECT",
+                            properties: {
+                                "airline": { "type": "STRING" },
+                                "flightNumber": { "type": "STRING" },
+                                "departureTime": { "type": "STRING" },
+                                "arrivalTime": { "type": "STRING" },
+                                "duration": { "type": "STRING" },
+                                "stops": { "type": "NUMBER" },
+                                "fare": { "type": "NUMBER" },
+                                "availability": { "type": "STRING" }
+                            },
+                            "propertyOrdering": ["airline", "flightNumber", "departureTime", "arrivalTime", "duration", "stops", "fare", "availability"]
+                        }
+                    }
+                };
+
+                try {
+                    const response = await fetch(WORKER_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(requestBodyForWorker)
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! status: ${response.status}. Details: ${errorText}`);
+                    }
+
+                    const result = await response.json();
+                    let flights = [];
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        try {
+                            const jsonString = result.candidates[0].content.parts[0].text;
+                            flights = JSON.parse(jsonString);
+                        } catch (parseError) {
+                            console.error('Error parsing JSON response from Worker:', parseError);
+                            showModal('Failed to parse flight data from AI. Please try again or check AI response format.');
+                            return;
+                        }
+                    }
+                    displayFlightResults(flights);
+                    hideModal();
+                    showModal('Flight search complete!', false);
+
+                } catch (error) {
+                    console.error('Error searching flights:', error);
+                    hideModal();
+                    showModal('Failed to search flights. Please try again later. Error: ' + error.message, false);
+                }
+            });
+
+            // Function to display flight results
+            function displayFlightResults(flights) {
+                flightResultsContentDiv.innerHTML = '';
+                flightResultsDiv.classList.remove('hidden');
+
+                if (flights && flights.length > 0) {
+                    let tableHtml = `
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
+                            <thead class="bg-blue-100">
+                                <tr>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Airline</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Flight No.</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Departure</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Arrival</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Duration</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Stops</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Fare</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Availability</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                    `;
+                    flights.forEach(flight => {
+                        tableHtml += `
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-3 px-4 text-sm text-gray-800">${flight.airline || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">${flight.flightNumber || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">${flight.departureTime || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">${flight.arrivalTime || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">${flight.duration || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">${flight.stops !== undefined ? flight.stops : 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">₹${(flight.fare || 0).toFixed(2)}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800 ${flight.availability === 'AVAILABLE' ? 'text-green-600 font-medium' : 'text-red-600 font-medium'}">${flight.availability || 'N/A'}</td>
+                            </tr>
+                        `;
+                    });
+                    tableHtml += `
+                            </tbody>
+                        </table>
+                    `;
+                    flightResultsContentDiv.innerHTML = tableHtml;
+                } else {
+                    flightResultsContentDiv.innerHTML = '<p class="text-gray-600 text-center">No flights found for your search criteria. Please try different details.</p>';
+                }
+            }
+
+            // --- Bus Booking Form Submission ---
+            busBookingForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                const busFrom = busFromInput.value.trim();
+                const busTo = busToInput.value.trim();
+                const busJourneyDate = busJourneyDateInput.value;
+                const busPassengers = busPassengersInput.value;
+
+                if (!busFrom || !busTo || !busJourneyDate || !busPassengers) {
+                    showModal('Please fill in all required fields (From City, To City, Date of Journey, Passengers).');
+                    return;
+                }
+
+                showModal('Searching for buses...', true);
+
+                const yourAgentId = 'YOUR_AGENT_ID_HERE'; // Replace with your actual agent ID
+                // --- IMPORTANT: CLOUDFLARE WORKER URL ---
+                const WORKER_API_URL = "https://shrill-glade-3b75.vinithjohnjeyaraj.workers.dev"; // <--- YOUR WORKER URL HERE
+
+                const prompt = `Find buses from ${busFrom} to ${busTo} on ${busJourneyDate} for ${busPassengers} passenger(s). Agent ID: ${yourAgentId}. Provide the response in a structured JSON format with bus details like operator, busType, departureTime, arrivalTime, duration, fare, and availability (e.g., "AVAILABLE", "FULL"). If no buses are found, return an empty array.`;
+
+                const requestBodyForWorker = {
+                    prompt: prompt,
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "ARRAY",
+                        items: {
+                            type: "OBJECT",
+                            properties: {
+                                "operator": { "type": "STRING" },
+                                "busType": { "type": "STRING" },
+                                "departureTime": { "type": "STRING" },
+                                "arrivalTime": { "type": "STRING" },
+                                "duration": { "type": "STRING" },
+                                "fare": { "type": "NUMBER" },
+                                "availability": { "type": "STRING" }
+                            },
+                            "propertyOrdering": ["operator", "busType", "departureTime", "arrivalTime", "duration", "fare", "availability"]
+                        }
+                    }
+                };
+
+                try {
+                    const response = await fetch(WORKER_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(requestBodyForWorker)
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! status: ${response.status}. Details: ${errorText}`);
+                    }
+
+                    const result = await response.json();
+                    let buses = [];
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        try {
+                            const jsonString = result.candidates[0].content.parts[0].text;
+                            buses = JSON.parse(jsonString);
+                        } catch (parseError) {
+                            console.error('Error parsing JSON response from Worker:', parseError);
+                            showModal('Failed to parse bus data from AI. Please try again or check AI response format.');
+                            return;
+                        }
+                    }
+                    displayBusResults(buses);
+                    hideModal();
+                    showModal('Bus search complete!', false);
+
+                } catch (error) {
+                    console.error('Error searching buses:', error);
+                    hideModal();
+                    showModal('Failed to search buses. Please try again later. Error: ' + error.message, false);
+                }
+            });
+
+            // Function to display bus results
+            function displayBusResults(buses) {
+                busResultsContentDiv.innerHTML = '';
+                busResultsDiv.classList.remove('hidden');
+
+                if (buses && buses.length > 0) {
+                    let tableHtml = `
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
+                            <thead class="bg-blue-100">
+                                <tr>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Operator</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Bus Type</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Departure</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Arrival</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Duration</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Fare</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Availability</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                    `;
+                    buses.forEach(bus => {
+                        tableHtml += `
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-3 px-4 text-sm text-gray-800">${bus.operator || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">${bus.busType || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">${bus.departureTime || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">${bus.arrivalTime || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">${bus.duration || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">₹${(bus.fare || 0).toFixed(2)}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800 ${bus.availability === 'AVAILABLE' ? 'text-green-600 font-medium' : 'text-red-600 font-medium'}">${bus.availability || 'N/A'}</td>
+                            </tr>
+                        `;
+                    });
+                    tableHtml += `
+                            </tbody>
+                        </table>
+                    `;
+                    busResultsContentDiv.innerHTML = tableHtml;
+                } else {
+                    busResultsContentDiv.innerHTML = '<p class="text-gray-600 text-center">No buses found for your search criteria. Please try different details.</p>';
+                }
+            }
+
+            // --- Taxi Services Form Submission ---
+            taxiBookingForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                const pickupLocation = pickupLocationInput.value.trim();
+                const dropoffLocation = dropoffLocationInput.value.trim();
+                const pickupDate = pickupDateInput.value;
+                const pickupTime = pickupTimeInput.value;
+                const taxiType = taxiTypeSelect.value;
+
+                if (!pickupLocation || !dropoffLocation || !pickupDate || !pickupTime) {
+                    showModal('Please fill in all required fields (Pickup Location, Drop-off Location, Pickup Date, Pickup Time).');
+                    return;
+                }
+
+                showModal('Searching for taxis...', true);
+
+                const yourAgentId = 'YOUR_AGENT_ID_HERE'; // Replace with your actual agent ID
+                // --- IMPORTANT: CLOUDFLARE WORKER URL ---
+                const WORKER_API_URL = "https://shrill-glade-3b75.vinithjohnjeyaraj.workers.dev"; // <--- YOUR WORKER URL HERE
+
+                const prompt = `Find a ${taxiType} taxi from ${pickupLocation} to ${dropoffLocation} on ${pickupDate} at ${pickupTime}. Agent ID: ${yourAgentId}. Provide the response in a structured JSON format with taxi details like serviceProvider, vehicleType, estimatedFare, estimatedDuration, and availability (e.g., "AVAILABLE", "NOT_AVAILABLE"). If no taxis are found, return an empty array.`;
+
+                const requestBodyForWorker = {
+                    prompt: prompt,
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "ARRAY",
+                        items: {
+                            type: "OBJECT",
+                            properties: {
+                                "serviceProvider": { "type": "STRING" },
+                                "vehicleType": { "type": "STRING" },
+                                "estimatedFare": { "type": "NUMBER" },
+                                "estimatedDuration": { "type": "STRING" },
+                                "availability": { "type": "STRING" }
+                            },
+                            "propertyOrdering": ["serviceProvider", "vehicleType", "estimatedFare", "estimatedDuration", "availability"]
+                        }
+                    }
+                };
+
+                try {
+                    const response = await fetch(WORKER_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(requestBodyForWorker)
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! status: ${response.status}. Details: ${errorText}`);
+                    }
+
+                    const result = await response.json();
+                    let taxis = [];
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        try {
+                            const jsonString = result.candidates[0].content.parts[0].text;
+                            taxis = JSON.parse(jsonString);
+                        } catch (parseError) {
+                            console.error('Error parsing JSON response from Worker:', parseError);
+                            showModal('Failed to parse taxi data from AI. Please try again or check AI response format.');
+                            return;
+                        }
+                    }
+                    displayTaxiResults(taxis);
+                    hideModal();
+                    showModal('Taxi search complete!', false);
+
+                } catch (error) {
+                    console.error('Error searching taxis:', error);
+                    hideModal();
+                    showModal('Failed to search taxis. Please try again later. Error: ' + error.message, false);
+                }
+            });
+
+            // Function to display taxi results
+            function displayTaxiResults(taxis) {
+                taxiResultsContentDiv.innerHTML = '';
+                taxiResultsDiv.classList.remove('hidden');
+
+                if (taxis && taxis.length > 0) {
+                    let tableHtml = `
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
+                            <thead class="bg-blue-100">
+                                <tr>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Service Provider</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Vehicle Type</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Estimated Fare</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Estimated Duration</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Availability</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                    `;
+                    taxis.forEach(taxi => {
+                        tableHtml += `
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-3 px-4 text-sm text-gray-800">${taxi.serviceProvider || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">${taxi.vehicleType || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">₹${(taxi.estimatedFare || 0).toFixed(2)}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800">${taxi.estimatedDuration || 'N/A'}</td>
+                                <td class="py-3 px-4 text-sm text-gray-800 ${taxi.availability === 'AVAILABLE' ? 'text-green-600 font-medium' : 'text-red-600 font-medium'}">${taxi.availability || 'N/A'}</td>
+                            </tr>
+                        `;
+                    });
+                    tableHtml += `
+                            </tbody>
+                        </table>
+                    `;
+                    taxiResultsContentDiv.innerHTML = tableHtml;
+                } else {
+                    taxiResultsContentDiv.innerHTML = '<p class="text-gray-600 text-center">No taxis found for your search criteria. Please try different details.</p>';
+                }
+            }
+
+            // --- Firebase Authentication Logic ---
+
+            // Email/Password Registration
+            registerForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = registerNameInput.value.trim();
+                const email = registerEmailInput.value.trim();
+                const password = registerPasswordInput.value.trim();
+
+                if (!name || !email || !password) {
+                    showModal('Please fill in all registration fields.', false);
+                    return;
+                }
+
+                showModal('Registering...', true);
+                try {
+                    if (!auth) {
+                        showModal('Firebase Authentication is not initialized. Please ensure your Firebase config is correct.', false);
+                        return;
+                    }
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    // Update user profile with display name
+                    await userCredential.user.updateProfile({ displayName: name });
+
+                    // Store user data in Firestore (optional, but good practice for profiles)
+                    if (db) {
+                        const userDocRef = doc(db, `artifacts/${appId}/users/${userCredential.user.uid}/profile/data/userProfile`);
+                        await setDoc(userDocRef, {
+                            name: name,
+                            email: email,
+                            createdAt: new Date().toISOString()
+                        }, { merge: true });
+                    } else {
+                        console.warn('Firestore not initialized. User profile data will not be saved.');
+                    }
+
+
+                    hideAllAuthModals();
+                    showModal('Registration successful! You are now logged in.', false);
+                    registerForm.reset();
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    showModal(`Registration failed: ${error.message}`, false);
+                }
+            });
+
+            // Email/Password Login
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = loginEmailInput.value.trim();
+                const password = loginPasswordInput.value.trim();
+
+                if (!email || !password) {
+                    showModal('Please enter your email and password.', false);
+                    return;
+                }
+
+                showModal('Logging in...', true);
+                try {
+                    if (!auth) {
+                        showModal('Firebase Authentication is not initialized. Please ensure your Firebase config is correct.', false);
+                        return;
+                    }
+                    await signInWithEmailAndPassword(auth, email, password);
+                    hideAllAuthModals();
+                    showModal('Login successful!', false);
+                    loginForm.reset();
+                } catch (error) {
+                    console.error('Login error:', error);
+                    showModal(`Login failed: ${error.message}`, false);
+                }
+            });
+
+            // Google Sign-In
+            googleSignInButton.addEventListener('click', async () => {
+                showModal('Signing in with Google...', true);
+                try {
+                    if (!auth) {
+                        showModal('Firebase Authentication is not initialized. Please ensure your Firebase config is correct.', false);
+                        return;
+                    }
+                    const provider = new GoogleAuthProvider();
+                    await signInWithPopup(auth, provider);
+                    hideAllAuthModals();
+                    showModal('Google Sign-in successful!', false);
+                } catch (error) {
+                    console.error('Google Sign-in error:', error);
+                    showModal(`Google Sign-in failed: ${error.message}`, false);
+                }
+            });
+
+            // Forgot Password
+            forgotPasswordForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = forgotEmailInput.value.trim();
+
+                if (!email) {
+                    showModal('Please enter your email address.', false);
+                    return;
+                }
+
+                showModal('Sending password reset email...', true);
+                try {
+                    if (!auth) {
+                        showModal('Firebase Authentication is not initialized. Please ensure your Firebase config is correct.', false);
+                        return;
+                    }
+                    await sendPasswordResetEmail(auth, email);
+                    hideAllAuthModals();
+                    showModal('Password reset email sent! Please check your inbox.', false);
+                    forgotPasswordForm.reset();
+                } catch (error) {
+                    console.error('Forgot password error:', error);
+                    showModal(`Failed to send reset email: ${error.message}`, false);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
