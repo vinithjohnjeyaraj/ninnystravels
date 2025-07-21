@@ -637,21 +637,24 @@
         import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         // --- Firebase Configuration ---
-        // These are your actual Firebase project configuration details.
-        const firebaseConfig = {
-            apiKey: "AIzaSyCfVWIbz_HfaaJtMbAiGuoc9TQjg--n5Js",
-            authDomain: "ninnystravels.firebaseapp.com",
-            projectId: "ninnystravels",
-            storageBucket: "ninnystravels.firebasestorage.app",
-            messagingSenderId: "788837044603",
-            appId: "1:788837044603:web:e8e0005cb0d9ac74be6dde",
-            measurementId: "G-ZRT77F9W35"
+        // In a real production environment, this configuration should be loaded securely
+        // from environment variables or a dedicated configuration service.
+        // The Canvas environment provides __firebase_config and __app_id for this purpose.
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            // Placeholder config for local development outside of Canvas, replace with your actual Firebase project config if needed for local testing.
+            apiKey: "YOUR_FIREBASE_API_KEY_HERE",
+            authDomain: "your-project-id.firebaseapp.com",
+            projectId: "your-project-id",
+            storageBucket: "your-project-id.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
         };
         // --- END Firebase Config ---
 
-        // These variables are for Firebase initialization.
-        const appId = "ninnystravels"; // Using your projectId as a logical app ID
-        const initialAuthToken = null; // No custom token for local anonymous sign-in
+        // The application ID, provided by the Canvas environment.
+        // In a real production environment, this would also come from environment variables.
+        const appId = typeof __app_id !== 'undefined' ? __app_id : firebaseConfig.projectId;
 
         let app;
         let auth;
@@ -748,12 +751,22 @@
                 center: india,
                 zoom: 5, // Zoom level to show most of India
             });
-            // Optional: Add a marker
-            new google.maps.Marker({
-                position: india,
-                map: map,
-                title: 'India'
-            });
+            // Using AdvancedMarkerElement as recommended (requires 'marker' library in script tag)
+            // For this to work, the Google Maps script tag needs to include &libraries=marker
+            if (typeof google.maps.marker !== 'undefined' && google.maps.marker.AdvancedMarkerElement) {
+                new google.maps.marker.AdvancedMarkerElement({
+                    position: india,
+                    map: map,
+                    title: 'India'
+                });
+            } else {
+                // Fallback to deprecated Marker if AdvancedMarkerElement is not available
+                new google.maps.Marker({
+                    position: india,
+                    map: map,
+                    title: 'India'
+                });
+            }
         }
 
         // Function to update authentication links in the header and attach event listeners
@@ -842,15 +855,21 @@
                 auth = getAuth(app);
                 db = getFirestore(app);
 
-                // Sign in anonymously for local testing if no custom token
+                // Sign in using __initial_auth_token if available, otherwise anonymously
                 try {
-                    await signInAnonymously(auth);
-                    console.log('Signed in anonymously for local testing.');
-                } catch (anonError) {
-                    console.error('Error signing in anonymously:', anonError);
-                    // Only show modal for actual errors, not for expected behavior in development
-                    // showModal('Authentication failed. Please refresh the page.', false);
+                    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+                    if (initialAuthToken) {
+                        await signInWithCustomToken(auth, initialAuthToken);
+                        console.log('Signed in with custom token.');
+                    } else {
+                        await signInAnonymously(auth);
+                        console.log('Signed in anonymously for local testing.');
+                    }
+                } catch (authError) {
+                    console.error('Error during Firebase authentication:', authError);
+                    showModal('Authentication failed. Please check your Firebase setup and refresh the page.', false);
                 }
+
 
                 // Listen for authentication state changes
                 onAuthStateChanged(auth, (user) => {
@@ -916,7 +935,7 @@
             const busToInput = document.getElementById('busTo');
             const busJourneyDateInput = document.getElementById('busJourneyDate');
             const busPassengersInput = document.getElementById('busPassengers');
-            const busResultsDiv = document = document.getElementById('busResults');
+            const busResultsDiv = document.getElementById('busResults'); // Corrected typo here
             const busResultsContentDiv = document.getElementById('busResultsContent');
 
             const taxiBookingForm = document.getElementById('taxiBookingForm');
@@ -1031,7 +1050,7 @@
                     // --- IMPORTANT: CLOUDFLARE WORKER URL ---
                     // This is the URL of the Worker you deployed in Cloudflare.
                     // Ensure your Worker is configured to handle image generation requests (e.g., routing to imagen-3.0-generate-002).
-                    const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev";
+                    const WORKER_API_URL = "https://d6e66ad2.ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER URL HERE
 
                     // Prompt for image generation
                     const imagePrompt = `A beautiful, scenic, high-quality thumbnail image of a famous landmark or natural beauty in ${city}. Focus on a single iconic element.`;
@@ -1136,7 +1155,7 @@
 
                 const yourAgentId = 'YOUR_AGENT_ID_HERE'; // Replace with your actual agent ID
                 // --- IMPORTANT: CLOUDFLARE WORKER URL ---
-                const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER URL HERE
+                const WORKER_API_URL = "https://d6e66ad2.ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER URL HERE
 
                 const prompt = `Find trains from ${fromStation} to ${toStation} on ${journeyDate} for ${travelClass} class under ${quota} quota. Agent ID: ${yourAgentId}. Provide the response in a structured JSON format with train details like trainName, trainNumber, departureTime, arrivalTime, duration, availability (e.g., "AVAILABLE", "WAITLIST"), and fare. If no trains are found, return an empty array.`;
 
@@ -1262,7 +1281,7 @@
 
                 const yourAgentId = 'YOUR_AGENT_ID_HERE'; // Replace with your actual agent ID
                 // --- IMPORTANT: CLOUDFLARE WORKER URL ---
-                const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER URL HERE
+                const WORKER_API_URL = "https://d6e66ad2.ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER URL HERE
 
                 const prompt = `Find flights from ${flightFrom} to ${flightTo} departing on ${departureDate} ${returnDate ? 'and returning on ' + returnDate : ''} for ${numPassengers} passenger(s) in ${flightClass} class. Agent ID: ${yourAgentId}. Provide the response in a structured JSON format with flight details like airline, flightNumber, departureTime, arrivalTime, duration, stops, fare, and availability (e.g., "AVAILABLE", "SOLD_OUT"). If no flights are found, return an empty array.`;
 
@@ -1389,7 +1408,7 @@
 
                 const yourAgentId = 'YOUR_AGENT_ID_HERE'; // Replace with your actual agent ID
                 // --- IMPORTANT: CLOUDFLARE WORKER URL ---
-                const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER_API_URL HERE
+                const WORKER_API_URL = "https://d6e66ad2.ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER_API_URL HERE
 
                 const prompt = `Find buses from ${busFrom} to ${busTo} on ${busJourneyDate} for ${busPassengers} passenger(s). Agent ID: ${yourAgentId}. Provide the response in a structured JSON format with bus details like operator, busType, departureTime, arrivalTime, duration, fare, and availability (e.g., "AVAILABLE", "FULL"). If no buses are found, return an empty array.`;
 
@@ -1514,7 +1533,7 @@
 
                 const yourAgentId = 'YOUR_AGENT_ID_HERE'; // Replace with your actual agent ID
                 // --- IMPORTANT: CLOUDFLARE WORKER URL ---
-                const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER_API_URL HERE
+                const WORKER_API_URL = "https://d6e66ad2.ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER_API_URL HERE
 
                 const prompt = `Find a ${taxiType} taxi from ${pickupLocation} to ${dropoffLocation} on ${pickupDate} at ${pickupTime}. Agent ID: ${yourAgentId}. Provide the response in a structured JSON format with taxi details like serviceProvider, vehicleType, estimatedFare, estimatedDuration, and availability (e.g., "AVAILABLE", "NOT_AVAILABLE"). If no taxis are found, return an empty array.`;
 
@@ -1733,7 +1752,10 @@
         });
     </script>
     <!-- Google Maps API Script -->
-    <!-- IMPORTANT: Replaced "YOUR_GOOGLE_MAPS_API_KEY" with your actual Google Maps API Key -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQ0ISKe34kx_2dSseZHrERQCr4eXhWocI&callback=initMap"></script>
+    <!-- IMPORTANT: In a real production environment, the API key should be managed via environment variables
+         on your hosting platform (e.g., Cloudflare Pages). You would dynamically construct this URL
+         in your build process or a serverless function to inject the key.
+         For Canvas preview, it's included directly. -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQ0ISKe34kx_2dSseZHrERQCr4eXhWocI&callback=initMap&libraries=marker"></script>
 </body>
 </html>
