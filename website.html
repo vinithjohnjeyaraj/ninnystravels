@@ -972,7 +972,7 @@
 
                     // --- IMPORTANT: CLOUDFLARE WORKER URL ---
                     // This is the URL of the Worker you deployed in Cloudflare.
-                    const WORKER_API_URL = "https://ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- YOUR WORKER URL HERE
+                    const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER URL HERE
 
                     const prompt = `Provide a detailed list of top tourist destinations and activities in ${city}. Include historical sites, cultural experiences, popular attractions, and brief descriptions for each. Format the response as a well-structured paragraph with key attractions highlighted.`;
 
@@ -1074,7 +1074,7 @@
 
                 const yourAgentId = 'YOUR_AGENT_ID_HERE'; // Replace with your actual agent ID
                 // --- IMPORTANT: CLOUDFLARE WORKER URL ---
-                const WORKER_API_URL = "https://ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- YOUR WORKER URL HERE
+                const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER URL HERE
 
                 const prompt = `Find trains from ${fromStation} to ${toStation} on ${journeyDate} for ${travelClass} class under ${quota} quota. Agent ID: ${yourAgentId}. Provide the response in a structured JSON format with train details like trainName, trainNumber, departureTime, arrivalTime, duration, availability (e.g., "AVAILABLE", "WAITLIST"), and fare. If no trains are found, return an empty array.`;
 
@@ -1200,7 +1200,7 @@
 
                 const yourAgentId = 'YOUR_AGENT_ID_HERE'; // Replace with your actual agent ID
                 // --- IMPORTANT: CLOUDFLARE WORKER URL ---
-                const WORKER_API_URL = "https://ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- YOUR WORKER URL HERE
+                const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER URL HERE
 
                 const prompt = `Find flights from ${flightFrom} to ${flightTo} departing on ${departureDate} ${returnDate ? 'and returning on ' + returnDate : ''} for ${numPassengers} passenger(s) in ${flightClass} class. Agent ID: ${yourAgentId}. Provide the response in a structured JSON format with flight details like airline, flightNumber, departureTime, arrivalTime, duration, stops, fare, and availability (e.g., "AVAILABLE", "SOLD_OUT"). If no flights are found, return an empty array.`;
 
@@ -1280,7 +1280,7 @@
                                     <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Duration</th>
                                     <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Stops</th>
                                     <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Fare</th>
-                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Availability</th>
+                                    <th class="py-3 px-4 text-sm text-gray-700 uppercase tracking-wider">Availability</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
@@ -1327,7 +1327,7 @@
 
                 const yourAgentId = 'YOUR_AGENT_ID_HERE'; // Replace with your actual agent ID
                 // --- IMPORTANT: CLOUDFLARE WORKER URL ---
-                const WORKER_API_URL = "https://ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- YOUR WORKER URL HERE
+                const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER URL HERE
 
                 const prompt = `Find buses from ${busFrom} to ${busTo} on ${busJourneyDate} for ${busPassengers} passenger(s). Agent ID: ${yourAgentId}. Provide the response in a structured JSON format with bus details like operator, busType, departureTime, arrivalTime, duration, fare, and availability (e.g., "AVAILABLE", "FULL"). If no buses are found, return an empty array.`;
 
@@ -1452,7 +1452,7 @@
 
                 const yourAgentId = 'YOUR_AGENT_ID_HERE'; // Replace with your actual agent ID
                 // --- IMPORTANT: CLOUDFLARE WORKER URL ---
-                const WORKER_API_URL = "https://ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- YOUR WORKER URL HERE
+                const WORKER_API_URL = "https://1db86961-ninnystravels.vinithjohnjeyaraj.workers.dev"; // <--- UPDATED WORKER URL HERE
 
                 const prompt = `Find a ${taxiType} taxi from ${pickupLocation} to ${dropoffLocation} on ${pickupDate} at ${pickupTime}. Agent ID: ${yourAgentId}. Provide the response in a structured JSON format with taxi details like serviceProvider, vehicleType, estimatedFare, estimatedDuration, and availability (e.g., "AVAILABLE", "NOT_AVAILABLE"). If no taxis are found, return an empty array.`;
 
