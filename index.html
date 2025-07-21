@@ -828,8 +828,8 @@
             // Get references to authentication UI elements (moved inside DOMContentLoaded)
             // These will be re-attached by updateAuthLinks, but initial setup is here.
             const forgotPasswordLink = document.getElementById('forgotPasswordLink');
-            const showRegisterLink = document.getElementById('showRegisterLink'); // Will be re-attached by updateAuthLinks
-            const showLoginLink = document.getElementById('showLoginLink');     // Will be re-attached by updateAuthLinks
+            const showRegisterLink = document.getElementById('showRegisterLink');
+            const showLoginLink = document.getElementById('showLoginLink');
             const backToLoginLink = document.getElementById('backToLoginLink');
 
             // Initial attachment for modals that are not part of updateAuthLinks dynamic content
@@ -842,6 +842,24 @@
             }
             if (backToLoginLink) {
                 backToLoginLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    hideAllAuthModals();
+                    loginModal.style.display = 'flex';
+                });
+            }
+
+            // NEW: Event listener for "Don't have an account? Register here" link in Login Modal
+            if (showRegisterLink) {
+                showRegisterLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    hideAllAuthModals();
+                    registerModal.style.display = 'flex';
+                });
+            }
+
+            // NEW: Event listener for "Already have an account? Login here" link in Register Modal
+            if (showLoginLink) {
+                showLoginLink.addEventListener('click', (e) => {
                     e.preventDefault();
                     hideAllAuthModals();
                     loginModal.style.display = 'flex';
