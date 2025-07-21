@@ -423,6 +423,39 @@
         </div>
     </section>
 
+    <!-- About Us Section (New Full Page Section) -->
+    <section id="aboutUsSection" class="hidden py-16 bg-gray-50 flex-grow">
+        <div class="container mx-auto px-4 contact-section-content">
+            <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg max-w-2xl w-full text-center">
+                <h2 class="text-4xl font-bold mb-8 text-blue-800">About NinnysTravels.in</h2>
+                <p class="text-gray-700 mb-4 text-left">
+                    Welcome to NinnysTravels.in, your trusted partner in crafting unforgettable journeys.
+                    We are a dedicated team of travel enthusiasts committed to providing seamless and enriching
+                    travel experiences across India and beyond.
+                </p>
+                <p class="text-gray-700 mb-4 text-left">
+                    Our mission is to make travel accessible, enjoyable, and stress-free. From booking trains,
+                    flights, and buses to arranging comfortable taxi services, we cover all aspects of your travel
+                    needs with precision and care. We believe every journey tells a story, and we are here to
+                    help you write yours.
+                </p>
+                <p class="text-gray-700 text-left">
+                    With years of experience in the travel industry, we pride ourselves on our personalized service,
+                    attention to detail, and commitment to customer satisfaction. Let us take care of the logistics,
+                    so you can focus on making memories.
+                </p>
+                <p class="text-gray-700 mt-4 text-left font-semibold">
+                    Thank you for choosing NinnysTravels.in – where your adventure begins!
+                </p>
+                <div class="mt-8">
+                    <button onclick="showMainContent();" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75">
+                        Return to Home Page
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Us Section -->
     <section id="contactUsSection" class="hidden py-16 bg-gray-50 flex-grow">
         <div class="container mx-auto px-4 contact-section-content">
@@ -702,7 +735,28 @@
         closeForgotPasswordModalButton.addEventListener('click', hideAllAuthModals);
         closeMapsModalButton.addEventListener('click', hideAllAuthModals); // Close map modal
 
-        // Function to update authentication links in the header
+        // Google Maps Initialization (moved outside DOMContentLoaded to be callable by Google Maps API script)
+        let map;
+        window.initMap = function() { // Make initMap a global function
+            if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
+                console.warn('Google Maps API not loaded. Cannot initialize map.');
+                return;
+            }
+
+            const india = { lat: 20.5937, lng: 78.9629 }; // Center of India
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: india,
+                zoom: 5, // Zoom level to show most of India
+            });
+            // Optional: Add a marker
+            new google.maps.Marker({
+                position: india,
+                map: map,
+                title: 'India'
+            });
+        }
+
+        // Function to update authentication links in the header and attach event listeners
         function updateAuthLinks(user) {
             authLinksContainer.innerHTML = ''; // Clear existing links
             if (user) {
@@ -717,7 +771,7 @@
                         <a href="#" id="logoutLink" class="block py-2 px-4 rounded-full bg-red-600 hover:bg-red-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75">LOGOUT</a>
                     </li>
                 `;
-                // IMPORTANT: Re-attach event listener for logoutLink after it's recreated
+                // Re-attach event listener for logoutLink after it's recreated
                 document.getElementById('logoutLink').addEventListener('click', async (e) => {
                     e.preventDefault();
                     try {
@@ -739,44 +793,33 @@
                         <a href="#" id="showRegisterModalLink" class="block py-2 px-4 rounded-full bg-blue-600 hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">REGISTER</a>
                     </li>
                 `;
-                // IMPORTANT: Re-attach event listeners for login/register links after they are recreated
-                // These are now attached inside DOMContentLoaded
+                // Re-attach event listeners for login/register links after they are recreated
+                document.getElementById('showLoginModalLink').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    hideAllAuthModals();
+                    loginModal.style.display = 'flex';
+                });
+                document.getElementById('showRegisterModalLink').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    hideAllAuthModals();
+                    registerModal.style.display = 'flex';
+                });
             }
         }
 
-        // Google Maps Initialization (moved outside DOMContentLoaded to be callable by Google Maps API script)
-        let map;
-        function initMap() {
-            if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
-                console.warn('Google Maps API not loaded. Cannot initialize map.');
-                // showModal('Google Maps API failed to load. Please check your internet connection and API key.', false); // Don't show modal here to avoid multiple modals
-                return;
-            }
-
-            const india = { lat: 20.5937, lng: 78.9629 }; // Center of India
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: india,
-                zoom: 5, // Zoom level to show most of India
-            });
-            // Optional: Add a marker
-            new google.maps.Marker({
-                position: india,
-                map: map,
-                title: 'India'
-            });
-        }
 
         // --- Firebase Initialization and Auth State Listener ---
         document.addEventListener('DOMContentLoaded', async function() {
             console.log('DOM Content Loaded: Script is running.');
 
             // Get references to authentication UI elements (moved inside DOMContentLoaded)
+            // These will be re-attached by updateAuthLinks, but initial setup is here.
             const forgotPasswordLink = document.getElementById('forgotPasswordLink');
-            const showRegisterLink = document.getElementById('showRegisterLink');
-            const showLoginLink = document.getElementById('showLoginLink');
+            const showRegisterLink = document.getElementById('showRegisterLink'); // Will be re-attached by updateAuthLinks
+            const showLoginLink = document.getElementById('showLoginLink');     // Will be re-attached by updateAuthLinks
             const backToLoginLink = document.getElementById('backToLoginLink');
 
-            // Attach event listeners for auth modals here, after DOM is loaded
+            // Initial attachment for modals that are not part of updateAuthLinks dynamic content
             if (forgotPasswordLink) {
                 forgotPasswordLink.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -784,23 +827,6 @@
                     forgotPasswordModal.style.display = 'flex';
                 });
             }
-
-            if (showRegisterLink) {
-                showRegisterLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    hideAllAuthModals();
-                    registerModal.style.display = 'flex';
-                });
-            }
-
-            if (showLoginLink) {
-                showLoginLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    hideAllAuthModals();
-                    loginModal.style.display = 'flex';
-                });
-            }
-
             if (backToLoginLink) {
                 backToLoginLink.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -808,6 +834,7 @@
                     loginModal.style.display = 'flex';
                 });
             }
+
 
             // Initialize Firebase if configuration is provided
             if (firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.authDomain) {
@@ -821,7 +848,8 @@
                     console.log('Signed in anonymously for local testing.');
                 } catch (anonError) {
                     console.error('Error signing in anonymously:', anonError);
-                    showModal('Authentication failed. Please refresh the page.', false);
+                    // Only show modal for actual errors, not for expected behavior in development
+                    // showModal('Authentication failed. Please refresh the page.', false);
                 }
 
                 // Listen for authentication state changes
@@ -851,6 +879,7 @@
             const busBookingSection = document.getElementById('busBookingSection');
             const taxiServicesSection = document.getElementById('taxiServicesSection');
             const contactUsSection = document.getElementById('contactUsSection');
+            const aboutUsSection = document.getElementById('aboutUsSection'); // Get the new About Us section
 
             // Get references to navigation links
             const siteLogoLink = document.getElementById('siteLogoLink');
@@ -887,7 +916,7 @@
             const busToInput = document.getElementById('busTo');
             const busJourneyDateInput = document.getElementById('busJourneyDate');
             const busPassengersInput = document.getElementById('busPassengers');
-            const busResultsDiv = document.getElementById('busResults');
+            const busResultsDiv = document = document.getElementById('busResults');
             const busResultsContentDiv = document.getElementById('busResultsContent');
 
             const taxiBookingForm = document.getElementById('taxiBookingForm');
@@ -922,6 +951,7 @@
                 busBookingSection.classList.add('hidden');
                 taxiServicesSection.classList.add('hidden');
                 contactUsSection.classList.add('hidden');
+                aboutUsSection.classList.add('hidden'); // Hide About Us section
                 mainContent.classList.remove('hidden');
                 window.scrollTo(0, 0); // Scroll to top of the page
             }
@@ -934,6 +964,7 @@
                 busBookingSection.classList.add('hidden');
                 taxiServicesSection.classList.add('hidden');
                 contactUsSection.classList.add('hidden');
+                aboutUsSection.classList.add('hidden'); // Hide About Us section
                 hideAllAuthModals(); // Hide any open auth modals
                 sectionToShow.classList.remove('hidden');
                 window.scrollTo(0, 0); // Scroll to top of the page
@@ -969,44 +1000,13 @@
                 e.preventDefault();
                 hideAllAuthModals();
                 googleMapsModal.style.display = 'flex';
-                initMap(); // Initialize map when modal is shown
+                // initMap() is now called by the Google Maps API script itself via the callback parameter
             });
 
-            // Updated About Us Link: Show detailed content in modal
+            // Updated About Us Link: Now shows the full section
             aboutUsLink.addEventListener('click', (e) => {
                 e.preventDefault();
-                const aboutUsContent = `
-                    <h3 class="text-2xl font-bold mb-4 text-blue-800">About NinnysTravels.in</h3>
-                    <p class="text-gray-700 mb-4 text-left">
-                        Welcome to NinnysTravels.in, your trusted partner in crafting unforgettable journeys.
-                        We are a dedicated team of travel enthusiasts committed to providing seamless and enriching
-                        travel experiences across India and beyond.
-                    </p>
-                    <p class="text-gray-700 mb-4 text-left">
-                        Our mission is to make travel accessible, enjoyable, and stress-free. From booking trains,
-                        flights, and buses to arranging comfortable taxi services, we cover all aspects of your travel
-                        needs with precision and care. We believe every journey tells a story, and we are here to
-                        help you write yours.
-                    </p>
-                    <p class="text-gray-700 text-left">
-                        With years of experience in the travel industry, we pride ourselves on our personalized service,
-                        attention to detail, and commitment to customer satisfaction. Let us take care of the logistics,
-                        so you can focus on making memories.
-                    </p>
-                    <p class="text-gray-700 mt-4 text-left font-semibold">
-                        Thank you for choosing NinnysTravels.in – where your adventure begins!
-                    </p>
-                    <div class="mt-8">
-                        <button onclick="hideModal(); showMainContent();" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75">
-                            Return to Home Page
-                        </button>
-                    </div>
-                `;
-                showModal('', false); // Show empty modal initially
-                modalMessage.innerHTML = aboutUsContent; // Use innerHTML to render HTML content
-                modalSpinner.classList.add('hidden'); // Ensure spinner is hidden
-                closeModalButton.classList.remove('hidden'); // Ensure close button is visible
-                messageModal.style.display = 'flex';
+                showSection(aboutUsSection); // Show the dedicated About Us section
             });
 
 
