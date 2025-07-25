@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NinnysTravels.in - Your Journey Starts Here</title>
+    <!-- Tailwind CSS CDN for utility-first styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter for a modern, clean typeface -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Base body styles for font, background, and sticky footer layout */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc; /* Lighter, cleaner background */
@@ -15,6 +18,8 @@
             display: flex;
             flex-direction: column;
         }
+
+        /* Hero section styling with a background image and overlay for text readability */
         .hero-section {
             /* Using a more vibrant placeholder image for a real-world feel */
             background-image: url('https://placehold.co/1200x600/3b82f6/ffffff?text=Explore+The+World');
@@ -25,6 +30,8 @@
             padding: 8rem 0;
             text-shadow: 2px 2px 6px rgba(0,0,0,0.6); /* Slightly stronger shadow for readability */
         }
+
+        /* Overlay for the hero section to improve text contrast */
         .hero-section::before {
             content: '';
             position: absolute;
@@ -34,25 +41,32 @@
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.45); /* Slightly darker overlay for better text contrast */
         }
+
+        /* Ensure hero content is above the overlay */
         .hero-content {
             position: relative;
             z-index: 10;
         }
-        /* Dropdown specific styles */
+
+        /* Dropdown menu specific styles */
         .dropdown-menu {
-            display: none;
+            display: none; /* Hidden by default */
             position: absolute;
             background-color: #1e40af; /* Deeper blue for dropdown background */
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.25); /* Slightly more prominent shadow */
-            z-index: 20;
+            z-index: 20; /* Ensure it's above other content */
             border-radius: 0.5rem;
             overflow: hidden;
             margin-top: 0.5rem;
         }
+
+        /* Show dropdown menu on hover */
         .dropdown:hover .dropdown-menu {
             display: block;
         }
+
+        /* Dropdown menu item styling */
         .dropdown-menu a {
             color: white;
             padding: 12px 16px;
@@ -60,11 +74,13 @@
             display: block;
             text-align: left;
         }
+
+        /* Dropdown menu item hover effect */
         .dropdown-menu a:hover {
             background-color: #1c3a81; /* Even darker blue on hover */
         }
 
-        /* Custom Modal Styles */
+        /* Custom Modal Styles (currently not used but kept for future implementation) */
         .modal-overlay {
             display: none; /* Hidden by default */
             position: fixed;
@@ -77,6 +93,7 @@
             align-items: center;
             z-index: 1000;
         }
+
         .modal-content {
             background-color: white;
             padding: 2.5rem; /* Slightly more padding */
@@ -87,6 +104,7 @@
             text-align: center;
             position: relative;
         }
+
         .modal-close-button {
             position: absolute;
             top: 0.75rem;
@@ -98,11 +116,12 @@
             color: #666;
             transition: color 0.2s;
         }
+
         .modal-close-button:hover {
             color: #333;
         }
 
-        /* Contact Section Specific Style */
+        /* Contact Section Specific Style (flex-grow ensures it takes available space) */
         .contact-section-content {
             flex-grow: 1;
             display: flex;
@@ -112,29 +131,50 @@
             flex-direction: column; /* Allow content to stack */
         }
 
-        /* Google Maps specific styling */
+        /* Google Maps specific styling (if integrated later) */
         #map {
             height: 400px; /* Adjusted height for better visibility */
             width: 100%;
             border-radius: 0.5rem;
             margin-top: 1rem;
         }
+
+        /* Custom scrollbar for the destinations carousel (for better aesthetics) */
+        #destinations-carousel::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        #destinations-carousel::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1; /* Tailwind gray-300 */
+            border-radius: 10px;
+        }
+
+        #destinations-carousel::-webkit-scrollbar-track {
+            background-color: #f1f5f9; /* Tailwind gray-100 */
+        }
+
+        /* Hide scrollbar for Firefox */
+        #destinations-carousel {
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 #f1f5f9;
+        }
     </style>
 </head>
 <body class="antialiased">
 
+    <!-- Header Section: Logo, Navigation Links, and Booking Dropdown -->
     <header class="bg-white text-gray-800 shadow-lg">
-        <div class="container mx-auto px-4 py-20 flex flex-col md:flex-row justify-between items-center">
+        <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
             <div class="mb-4 md:mb-0">
-                <a href="index.html" id="siteLogoLink" class="hover:opacity-80 transition duration-300">
+                <!-- Site Logo with a link back to the homepage -->
+                <a href="#" id="siteLogoLink" class="hover:opacity-80 transition duration-300">
                     <img src="https://github.com/vinithjohnjeyaraj/ninnystravels/raw/main/logo.png" alt="NinnysTravels Logo" class="h-60 w-auto">
                 </a>
             </div>
-
             <nav>
                 <ul class="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-8 text-lg">
                     <li>
-                        <a href="index.html" id="homeLink" class="block py-2 px-4 rounded-full text-blue-700 hover:bg-blue-100 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">HOME</a>
+                        <a href="#" id="homeLink" class="block py-2 px-4 rounded-full text-blue-700 hover:bg-blue-100 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">HOME</a>
                     </li>
                     <li class="relative dropdown">
                         <a href="#" class="block py-2 px-4 rounded-full text-blue-700 hover:bg-blue-100 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">BOOKINGS</a>
@@ -151,17 +191,14 @@
                     <li>
                         <a href="#" id="aboutUsLink" class="block py-2 px-4 rounded-full text-blue-700 hover:bg-blue-100 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">ABOUT US</a>
                     </li>
-                    <li>
-                        <a href="#" id="viewMapLink" class="block py-2 px-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">VIEW MAP</a>
-                    </li>
-                    <li id="authLinksContainer" class="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-8 text-lg">
-                        </li>
                 </ul>
             </nav>
         </div>
     </header>
 
+    <!-- Main Content (Homepage) Section -->
     <div id="mainContent" class="block">
+        <!-- Hero Section: Main Call to Action -->
         <section class="hero-section text-center">
             <div class="hero-content container mx-auto px-4">
                 <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
@@ -176,43 +213,138 @@
             </div>
         </section>
 
+        <!-- Popular Destinations Carousel Section -->
         <section class="py-16 bg-gray-50">
             <div class="container mx-auto px-4 text-center">
                 <h2 class="text-4xl font-bold mb-12 text-blue-800">Popular Destinations</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300">
-                        <img src="https://placehold.co/600x400/a0aec0/ffffff?text=Paris" alt="Paris" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-2xl font-semibold mb-3 text-blue-700">Paris, France</h3>
-                            <p class="text-gray-700 mb-4">Experience the romance and iconic landmarks of the City of Lights.</p>
-                            <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Paris">Learn More</a>
+
+                <div class="relative w-full overflow-hidden">
+                    <div id="destinations-carousel" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 space-x-8">
+                        <!-- Destination Card 1 (Paris) -->
+                        <div class="flex-shrink-0 w-80 md:w-96 bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 snap-center">
+                            <img src="https://placehold.co/600x400/a0aec0/ffffff?text=Paris" alt="Paris" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-700">Paris, France</h3>
+                                <p class="text-gray-700 mb-4">Experience the romance and iconic landmarks of the City of Lights.</p>
+                                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Paris">Learn More</a>
+                            </div>
+                        </div>
+                        <!-- Destination Card 2 (Tokyo) -->
+                        <div class="flex-shrink-0 w-80 md:w-96 bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 snap-center">
+                            <img src="https://placehold.co/600x400/81c784/ffffff?text=Tokyo" alt="Tokyo" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-700">Tokyo, Japan</h3>
+                                <p class="text-gray-700 mb-4">Dive into the vibrant culture and futuristic cityscape of Tokyo.</p>
+                                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Tokyo">Learn More</a>
+                            </div>
+                        </div>
+                        <!-- Destination Card 3 (Bali) -->
+                        <div class="flex-shrink-0 w-80 md:w-96 bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 snap-center">
+                            <img src="https://placehold.co/600x400/fbc02d/ffffff?text=Bali" alt="Bali" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-700">Bali, Indonesia</h3>
+                                <p class="text-gray-700 mb-4">Relax on pristine beaches and explore the spiritual side of Bali.</p>
+                                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Bali">Learn More</a>
+                            </div>
+                        </div>
+                        <!-- New International Destinations (10 more) -->
+                        <div class="flex-shrink-0 w-80 md:w-96 bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 snap-center">
+                            <img src="https://placehold.co/600x400/60A5FA/ffffff?text=London" alt="London" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-700">London, UK</h3>
+                                <p class="text-gray-700 mb-4">Explore historic landmarks and vibrant culture.</p>
+                                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="London">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-80 md:w-96 bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 snap-center">
+                            <img src="https://placehold.co/600x400/EF4444/ffffff?text=Rome" alt="Rome" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-700">Rome, Italy</h3>
+                                <p class="text-gray-700 mb-4">Discover ancient history and exquisite cuisine.</p>
+                                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Rome">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-80 md:w-96 bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 snap-center">
+                            <img src="https://placehold.co/600x400/34D399/ffffff?text=New+York" alt="New York City" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-700">New York City, USA</h3>
+                                <p class="text-gray-700 mb-4">Experience the iconic energy of the Big Apple.</p>
+                                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="New York City">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-80 md:w-96 bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 snap-center">
+                            <img src="https://placehold.co/600x400/FBBF24/ffffff?text=Sydney" alt="Sydney" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-700">Sydney, Australia</h3>
+                                <p class="text-gray-700 mb-4">Enjoy the stunning harbor and vibrant city life.</p>
+                                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Sydney">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-80 md:w-96 bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 snap-center">
+                            <img src="https://placehold.co/600x400/6B7280/ffffff?text=Dubai" alt="Dubai" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-700">Dubai, UAE</h3>
+                                <p class="text-gray-700 mb-4">Luxury shopping, modern architecture, and desert adventures.</p>
+                                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Dubai">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-80 md:w-96 bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 snap-center">
+                            <img src="https://placehold.co/600x400/EC4899/ffffff?text=Barcelona" alt="Barcelona" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-700">Barcelona, Spain</h3>
+                                <p class="text-gray-700 mb-4">Gaudi's architecture, vibrant street life, and beautiful beaches.</p>
+                                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Barcelona">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-80 md:w-96 bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 snap-center">
+                            <img src="https://placehold.co/600x400/10B981/ffffff?text=Amsterdam" alt="Amsterdam" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-700">Amsterdam, Netherlands</h3>
+                                <p class="text-gray-700 mb-4">Canals, artistic heritage, and elaborate canal houses.</p>
+                                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Amsterdam">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-80 md:w-96 bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 snap-center">
+                            <img src="https://placehold.co/600x400/F59E0B/ffffff?text=Rio" alt="Rio de Janeiro" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-700">Rio de Janeiro, Brazil</h3>
+                                <p class="text-gray-700 mb-4">Samba, beaches, and the iconic Christ the Redeemer statue.</p>
+                                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Rio de Janeiro">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-80 md:w-96 bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 snap-center">
+                            <img src="https://placehold.co/600x400/9CA3AF/ffffff?text=Cairo" alt="Cairo" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-700">Cairo, Egypt</h3>
+                                <p class="text-gray-700 mb-4">Ancient pyramids, bustling markets, and historical treasures.</p>
+                                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Cairo">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-80 md:w-96 bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 snap-center">
+                            <img src="https://placehold.co/600x400/F87171/ffffff?text=Bangkok" alt="Bangkok" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-semibold mb-3 text-blue-700">Bangkok, Thailand</h3>
+                                <p class="text-gray-700 mb-4">Ornate shrines, vibrant street life, and delicious food.</p>
+                                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Bangkok">Learn More</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300">
-                        <img src="https://placehold.co/600x400/81c784/ffffff?text=Tokyo" alt="Tokyo" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-2xl font-semibold mb-3 text-blue-700">Tokyo, Japan</h3>
-                            <p class="text-gray-700 mb-4">Dive into the vibrant culture and futuristic cityscape of Tokyo.</p>
-                            <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Tokyo">Learn More</a>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300">
-                        <img src="https://placehold.co/600x400/fbc02d/ffffff?text=Bali" alt="Bali" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-2xl font-semibold mb-3 text-blue-700">Bali, Indonesia</h3>
-                            <p class="text-gray-700 mb-4">Relax on pristine beaches and explore the spiritual side of Bali.</p>
-                            <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-md transition duration-300 learn-more-destination" data-city="Bali">Learn More</a>
-                        </div>
-                    </div>
+                    <!-- Navigation Arrows for Carousel -->
+                    <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none z-10">
+                        &lt;
+                    </button>
+                    <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none z-10">
+                        &gt;
+                    </button>
                 </div>
             </div>
         </section>
     </div>
 
-    <section id="trainBookingSection" class="hidden py-16 bg-gray-50">
+    <!-- Booking Sections (hidden by default, revealed by JS) -->
+    <section id="trainBookingSection" class="hidden py-16 bg-gray-50 flex-grow">
         <div class="container mx-auto px-4">
             <h2 class="text-4xl font-bold mb-8 text-blue-800 text-center">Book Your Train Journey</h2>
-
             <form id="trainBookingForm" class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto mt-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
@@ -255,7 +387,6 @@
                     </button>
                 </div>
             </form>
-
             <div id="trainResults" class="mt-12 p-6 bg-white rounded-xl shadow-lg hidden">
                 <h3 class="text-2xl font-semibold mb-6 text-blue-700 text-center">Available Trains</h3>
                 <div id="resultsContent" class="overflow-x-auto">
@@ -265,10 +396,9 @@
         </div>
     </section>
 
-    <section id="flightBookingSection" class="hidden py-16 bg-gray-50">
+    <section id="flightBookingSection" class="hidden py-16 bg-gray-50 flex-grow">
         <div class="container mx-auto px-4">
             <h2 class="text-4xl font-bold mb-8 text-blue-800 text-center">Book Your Flight</h2>
-
             <form id="flightBookingForm" class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
@@ -307,7 +437,6 @@
                     </button>
                 </div>
             </form>
-
             <div id="flightResults" class="mt-12 p-6 bg-white rounded-xl shadow-lg hidden">
                 <h3 class="text-2xl font-semibold mb-6 text-blue-700 text-center">Available Flights</h3>
                 <div id="flightResultsContent" class="overflow-x-auto">
@@ -317,10 +446,9 @@
         </div>
     </section>
 
-    <section id="busBookingSection" class="hidden py-16 bg-gray-50">
+    <section id="busBookingSection" class="hidden py-16 bg-gray-50 flex-grow">
         <div class="container mx-auto px-4">
             <h2 class="text-4xl font-bold mb-8 text-blue-800 text-center">Book Your Bus Ticket</h2>
-
             <form id="busBookingForm" class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
@@ -346,29 +474,27 @@
                     </button>
                 </div>
             </form>
-
             <div id="busResults" class="mt-12 p-6 bg-white rounded-xl shadow-lg hidden">
                 <h3 class="text-2xl font-semibold mb-6 text-blue-700 text-center">Available Buses</h3>
-                <div id="busResultsContent" class="overflow-x-auto">
+                <div id="resultsContent" class="overflow-x-auto">
                     <p class="text-gray-600 text-center">No buses found for your search criteria.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="taxiServicesSection" class="hidden py-16 bg-gray-50">
+    <section id="taxiServicesSection" class="hidden py-16 bg-gray-50 flex-grow">
         <div class="container mx-auto px-4">
             <h2 class="text-4xl font-bold mb-8 text-blue-800 text-center">Book a Taxi</h2>
-
             <form id="taxiBookingForm" class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
-                        <label for="pickupLocation" class="block text-gray-700 text-lg font-medium mb-2">Pickup Location:</label>
-                        <input type="text" id="pickupLocation" name="pickupLocation" placeholder="e.g., Airport, Hotel Name" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                        <label for="taxiFrom" class="block text-gray-700 text-lg font-medium mb-2">Pickup Location:</label>
+                        <input type="text" id="taxiFrom" name="taxiFrom" placeholder="e.g., Airport, Station" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
                     </div>
                     <div>
-                        <label for="dropoffLocation" class="block text-gray-700 text-lg font-medium mb-2">Drop-off Location:</label>
-                        <input type="text" id="dropoffLocation" name="dropoffLocation" placeholder="e.g., Destination Address" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                        <label for="taxiTo" class="block text-gray-700 text-lg font-medium mb-2">Drop-off Location:</label>
+                        <input type="text" id="taxiTo" name="taxiTo" placeholder="e.g., Hotel, Residence" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
                     </div>
                     <div>
                         <label for="pickupDate" class="block text-gray-700 text-lg font-medium mb-2">Pickup Date:</label>
@@ -379,267 +505,177 @@
                         <input type="time" id="pickupTime" name="pickupTime" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
                     </div>
                     <div>
-                        <label for="taxiType" class="block text-gray-700 text-lg font-medium mb-2">Taxi Type:</label>
+                        <label for="taxiType" class="block text-gray-700 text-lg font-medium mb-2">Vehicle Type:</label>
                         <select id="taxiType" name="taxiType" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                            <option value="SEDAN">Sedan</option>
-                            <option value="SUV">SUV</option>
-                            <option value="LUXURY">Luxury</option>
+                            <option value="sedan">Sedan (4 Seater)</option>
+                            <option value="suv">SUV (6 Seater)</option>
+                            <option value="tempo">Tempo Traveller</option>
                         </select>
                     </div>
                 </div>
                 <div class="text-center">
                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75">
-                        Search Taxis
+                        Book Taxi
                     </button>
                 </div>
             </form>
-
             <div id="taxiResults" class="mt-12 p-6 bg-white rounded-xl shadow-lg hidden">
                 <h3 class="text-2xl font-semibold mb-6 text-blue-700 text-center">Available Taxis</h3>
-                <div id="taxiResultsContent" class="overflow-x-auto">
+                <div id="resultsContent" class="overflow-x-auto">
                     <p class="text-gray-600 text-center">No taxis found for your search criteria.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="aboutUsSection" class="hidden py-16 bg-gray-50 flex-grow">
-        <div class="container mx-auto px-4 contact-section-content">
-            <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg max-w-2xl w-full text-center">
-                <h2 class="text-4xl font-bold mb-8 text-blue-800">About NinnysTravels.in</h2>
-                <p class="text-gray-700 mb-4 text-left">
-                    Welcome to NinnysTravels.in, your trusted partner in crafting unforgettable journeys.
-                    We are a dedicated team of travel enthusiasts committed to providing seamless and enriching
-                    travel experiences across India and beyond.
+    <!-- About Us Section -->
+    <section id="aboutUsSection" class="hidden py-16 bg-white flex-grow">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-8 text-blue-800">About NinnysTravels.in</h2>
+            <div class="max-w-3xl mx-auto text-gray-700 text-lg leading-relaxed">
+                <p class="mb-4">
+                    NinnysTravels.in is dedicated to making your travel dreams a reality. We believe that every journey should be seamless, memorable, and filled with incredible experiences. Our mission is to provide a one-stop platform for all your travel needs, from booking flights and trains to finding the perfect taxi service.
                 </p>
-                <p class="text-gray-700 mb-4 text-left">
-                    Our mission is to make travel accessible, enjoyable, and stress-free. From booking trains,
-                    flights, and buses to arranging comfortable taxi services, we cover all aspects of your travel
-                    needs with precision and care. We believe every journey tells a story, and we are here to
-                    help you write yours.
+                <p class="mb-4">
+                    With a team of passionate travel experts, we curate the best options for you, ensuring you get the best value and the highest level of service. Whether you are planning a solo adventure, a family vacation, or a business trip, NinnysTravels.in is here to help you every step of the way.
                 </p>
-                <p class="text-gray-700 text-left">
-                    With years of experience in the travel industry, we pride ourselves on our personalized service,
-                    attention to detail, and commitment to customer satisfaction. Let us take care of the logistics,
-                    so you can focus on making memories.
+                <p class="font-semibold text-blue-600">
+                    Your journey is our passion. Let's explore the world together!
                 </p>
-                <p class="text-gray-700 mt-4 text-left font-semibold">
-                    Thank you for choosing NinnysTravels.in – where your adventure begins!
-                </p>
-                <div class="mt-8">
-                    <button onclick="showMainContent();" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75">
-                        Return to Home Page
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contactUsSection" class="hidden py-16 bg-gray-50 flex-grow">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-8 text-blue-800 text-center">Get in Touch</h2>
+            <form id="contactForm" class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="name" class="block text-gray-700 text-lg font-medium mb-2">Name</label>
+                        <input type="text" id="name" name="name" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 text-lg font-medium mb-2">Email</label>
+                        <input type="email" id="email" name="email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="message" class="block text-gray-700 text-lg font-medium mb-2">Message</label>
+                    <textarea id="message" name="message" rows="5" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75">
+                        Send Message
                     </button>
                 </div>
-            </div>
+            </form>
         </div>
     </section>
 
-    <section id="contactUsSection" class="hidden py-16 bg-gray-50 flex-grow">
-        <div class="container mx-auto px-4 contact-section-content">
-            <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg max-w-lg w-full text-center mb-8">
-                <h2 class="text-4xl font-bold mb-8 text-blue-800">Contact Us</h2>
-
-                <div class="space-y-6 text-lg text-gray-700">
-                    <p><strong>Company Name:</strong> NinnysTravels</p>
-                    <p><strong>For Customer Support:</strong>
-                        <a href="mailto:support@ninnystravels.in" class="text-blue-600 hover:underline">support@ninnystravels.in</a>
-                    </p>
-                    </div>
-
-                <div class="mt-10">
-                    <p class="text-gray-600">We are here to help you with all your travel needs!</p>
-                </div>
-                <div class="mt-8">
-                    <a href="index.html" id="contactUsBackToHome" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75">Back to Home</a>
-                </div>
-            </div>
-
-            <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg max-w-lg w-full text-center mt-8">
-                <h3 class="text-3xl font-bold mb-8 text-blue-800">Send Us a Message</h3>
-                <form id="customerQueryForm" class="space-y-6">
-                    <div>
-                        <label for="customerName" class="sr-only">Your Name</label>
-                        <input type="text" id="customerName" name="customerName" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
-                    </div>
-                    <div>
-                        <label for="customerEmail" class="sr-only">Your Email</label>
-                        <input type="email" id="customerEmail" name="customerEmail" placeholder="Your Email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
-                    </div>
-                    <div>
-                        <label for="querySubject" class="sr-only">Subject</label>
-                        <input type="text" id="querySubject" name="querySubject" placeholder="Subject" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
-                    </div>
-                    <div>
-                        <label for="queryMessage" class="sr-only">Your Message/Complaint</label>
-                        <textarea id="queryMessage" name="queryMessage" rows="6" placeholder="Your Message or Complaint" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required></textarea>
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-orange-400 focus:ring-opacity-75">
-                            Send Message
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-
-    <section class="bg-blue-800 text-white py-16 text-center">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold mb-6">Ready to Plan Your Next Adventure?</h2>
-            <p class="text-xl mb-8 max-w-3xl mx-auto">
-                Our expert travel agents are here to help you craft the perfect itinerary, tailored to your dreams and budget.
-            </p>
-            <button id="getFreeQuoteButton" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-orange-400 focus:ring-opacity-75">
-                Get a Free Quote
-            </button>
-        </div>
-    </section>
-
-    <footer class="bg-white text-gray-800 py-8 mt-auto">
-        <div class="container mx-auto px-4 text-center text-sm">
-            <p>&copy; 2025 NinnysTravels.in. All rights reserved.</p>
-            <div class="mt-4 space-x-4">
-                <a href="#" class="text-blue-600 hover:text-blue-800 transition duration-300">Privacy Policy</a>
-                <a href="#" class="text-blue-600 hover:text-blue-800 transition duration-300">Terms of Service</a>
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-white py-8 mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div class="text-xl font-bold">NinnysTravels.in</div>
+                <nav class="flex space-x-6">
+                    <!-- Footer navigation links -->
+                    <a href="#" class="hover:text-blue-400 transition duration-300" id="footerHomeLink">Home</a>
+                    <a href="#" class="hover:text-blue-400 transition duration-300" id="footerAboutUsLink">About Us</a>
+                    <a href="#" class="hover:text-blue-400 transition duration-300" id="footerContactUsLink">Contact Us</a>
+                    <a href="#" class="hover:text-blue-400 transition duration-300">Terms of Service</a>
+                    <a href="#" class="hover:text-blue-400 transition duration-300">Privacy Policy</a>
+                </nav>
+                <p class="text-sm text-gray-400">&copy; 2025 NinnysTravels. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <div id="messageModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close-button">&times;</button>
-            <p id="modalMessage" class="text-lg font-medium text-gray-800 mb-4"></p>
-            <div id="modalSpinner" class="hidden animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto"></div>
-        </div>
-    </div>
+    <!-- JavaScript for Interactivity -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get references to all main content sections
+            const mainContent = document.getElementById('mainContent');
+            const trainBookingSection = document.getElementById('trainBookingSection');
+            const flightBookingSection = document.getElementById('flightBookingSection');
+            const busBookingSection = document.getElementById('busBookingSection');
+            const taxiServicesSection = document.getElementById('taxiServicesSection');
+            const aboutUsSection = document.getElementById('aboutUsSection');
+            const contactUsSection = document.getElementById('contactUsSection');
 
+            // Get references to all navigation links and buttons
+            const homeLink = document.getElementById('homeLink');
+            const siteLogoLink = document.getElementById('siteLogoLink');
+            const bookTrainLink = document.getElementById('bookTrainLink');
+            const bookFlightsLink = document.getElementById('bookFlightsLink');
+            const busBookingLink = document.getElementById('busBookingLink');
+            const taxiServicesLink = document.getElementById('taxiServicesLink');
+            const aboutUsLink = document.getElementById('aboutUsLink');
+            const contactUsLink = document.getElementById('contactUsLink');
+            const startPlanningButton = document.getElementById('startPlanningButton');
 
-    <div id="registerModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close-button">&times;</button>
-            <h2 class="text-3xl font-bold mb-6 text-blue-800">Register</h2>
-            <form id="registerForm" class="space-y-5">
-                <div>
-                    <input type="text" id="registerName" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
-                </div>
-                <div>
-                    <input type="email" id="registerEmail" placeholder="Email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
-                </div>
-                <div>
-                    <input type="password" id="registerPassword" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
-                </div>
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300">Register</button>
-            </form>
-            <p class="mt-4 text-gray-700">Already have an account? <a href="#" id="showLoginFromRegister" class="text-blue-600 hover:underline">Login here</a></p>
-        </div>
-    </div>
+            // Footer links (for consistency in navigation)
+            const footerHomeLink = document.getElementById('footerHomeLink');
+            const footerAboutUsLink = document.getElementById('footerAboutUsLink');
+            const footerContactUsLink = document.getElementById('footerContactUsLink');
 
-    <div id="loginModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close-button">&times;</button>
-            <h2 class="text-3xl font-bold mb-6 text-blue-800">Login</h2>
-            <form id="loginForm" class="space-y-5">
-                <div>
-                    <input type="email" id="loginEmail" placeholder="Email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
-                </div>
-                <div>
-                    <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
-                </div>
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300">Login</button>
-            </form>
-            <p class="mt-4 text-gray-700"><a href="#" id="showForgotFromLogin" class="text-blue-600 hover:underline">Forgot Password?</a></p>
-            <p class="mt-2 text-gray-700">Don't have an account? <a href="#" id="showRegisterFromLogin" class="text-blue-600 hover:underline">Register here</a></p>
-            <div class="mt-6">
-                <button id="googleSignInButton" class="w-full flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300">
-                    <img src="https://img.icons8.com/color/24/000000/google-logo.png" alt="Google logo" class="mr-3">
-                    Sign in with Google
-                </button>
-            </div>
-        </div>
-    </div>
+            // Function to show a specific section and hide all others
+            function showSection(sectionToShow) {
+                const sections = [mainContent, trainBookingSection, flightBookingSection, busBookingSection, taxiServicesSection, aboutUsSection, contactUsSection];
+                sections.forEach(section => {
+                    if (section) {
+                        section.classList.add('hidden'); // Hide all sections
+                    }
+                });
+                if (sectionToShow) {
+                    sectionToShow.classList.remove('hidden'); // Show the desired section
+                    window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top for better UX
+                }
+            }
 
-    <div id="forgotPasswordModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close-button">&times;</button>
-            <h2 class="text-3xl font-bold mb-6 text-blue-800">Forgot Password</h2>
-            <form id="forgotPasswordForm" class="space-y-5">
-                <div>
-                    <input type="email" id="forgotEmail" placeholder="Enter your email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
-                </div>
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300">Send Reset Email</button>
-            </form>
-            <p class="mt-4 text-gray-700">Remember your password? <a href="#" id="showLoginFromForgot" class="text-blue-600 hover:underline">Login here</a></p>
-        </div>
-    </div>
+            // Add event listeners for header navigation links
+            if (homeLink) homeLink.addEventListener('click', (e) => { e.preventDefault(); showSection(mainContent); });
+            if (siteLogoLink) siteLogoLink.addEventListener('click', (e) => { e.preventDefault(); showSection(mainContent); });
+            if (startPlanningButton) startPlanningButton.addEventListener('click', (e) => { e.preventDefault(); showSection(trainBookingSection); });
+            if (bookTrainLink) bookTrainLink.addEventListener('click', (e) => { e.preventDefault(); showSection(trainBookingSection); });
+            if (bookFlightsLink) bookFlightsLink.addEventListener('click', (e) => { e.preventDefault(); showSection(flightBookingSection); });
+            if (busBookingLink) busBookingLink.addEventListener('click', (e) => { e.preventDefault(); showSection(busBookingSection); });
+            if (taxiServicesLink) taxiServicesLink.addEventListener('click', (e) => { e.preventDefault(); showSection(taxiServicesSection); });
+            if (aboutUsLink) aboutUsLink.addEventListener('click', (e) => { e.preventDefault(); showSection(aboutUsSection); });
+            if (contactUsLink) contactUsLink.addEventListener('click', (e) => { e.preventDefault(); showSection(contactUsSection); });
 
-    <script type="module">
-        // Firebase Configuration (Replace with your actual Firebase config)
-        // For security, in a real app, this should be loaded from environment variables or a server.
-        // For Canvas preview, it's included directly.
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY", // Replace with your Firebase API Key
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
+            // Add event listeners for footer navigation links
+            if (footerHomeLink) footerHomeLink.addEventListener('click', (e) => { e.preventDefault(); showSection(mainContent); });
+            if (footerAboutUsLink) footerAboutUsLink.addEventListener('click', (e) => { e.preventDefault(); showSection(aboutUsSection); });
+            if (footerContactUsLink) footerContactUsLink.addEventListener('click', (e) => { e.preventDefault(); showSection(contactUsSection); });
 
-        // Initialize Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+            // Carousel functionality for Popular Destinations section
+            const carousel = document.getElementById('destinations-carousel');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const scrollAmount = 350; // Amount to scroll per click (adjust based on card width + gap)
 
-        let app;
-        let auth;
-        let db;
-        let appId; // Store appId for Firestore path
+            if (carousel && prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', () => {
+                    carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                });
+                nextBtn.addEventListener('click', () => {
+                    carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                });
+            }
 
-        try {
-            app = initializeApp(firebaseConfig);
-            auth = getAuth(app);
-            db = getFirestore(app);
-            appId = firebaseConfig.appId; // Get appId from config
-            console.log("Firebase initialized successfully.");
-        } catch (error) {
-            console.error("Error initializing Firebase:", error);
-            // Optionally, display a message to the user about Firebase not being available
-            // showModal('Firebase services are not available. Some features may be limited.', false);
-        }
-
-        // DOM Elements
-        const mainContent = document.getElementById('mainContent');
-        const trainBookingSection = document.getElementById('trainBookingSection');
-        const flightBookingSection = document.getElementById('flightBookingSection');
-        const busBookingSection = document.getElementById('busBookingSection');
-        const taxiServicesSection = document.getElementById('taxiServicesSection');
-        const contactUsSection = document.getElementById('contactUsSection');
-        const aboutUsSection = document.getElementById('aboutUsSection');
-
-        // Nav Links
-        const homeLink = document.getElementById('homeLink');
-        const bookTrainLink = document.getElementById('bookTrainLink');
-        const bookFlightsLink = document.getElementById('bookFlightsLink');
-        const busBookingLink = document.getElementById('busBookingLink');
-        const taxiServicesLink = document.getElementById('taxiServicesLink');
-        const contactUsLink = document.getElementById('contactUsLink');
-        const aboutUsLink = document.getElementById('aboutUsLink');
-        const viewMapLink = document.getElementById('viewMapLink');
-
-        // Forms and Results containers
-        const trainBookingForm = document.getElementById('trainBookingForm');
-        const trainResultsDiv = document.getElementById('trainResults');
-        const trainResultsContentDiv = document.getElementById('resultsContent');
-
-        const flightBookingForm = document.getElementById('flightBookingForm');
-        const flightResultsDiv = document.getElementById('flightResults');
-        const flightResultsContentDiv = document.getElementById('flightResultsContent');
-
-        const busBookingForm = document.getElementById('busBookingForm');
-        const busResultsDiv = document.getElementById('busResults');
-        const busResultsContentDiv = document.getElementById('busResultsContent');
-
-        const taxiBookingForm = document.getElementById('taxiBookingForm');
-        const taxiResultsDiv = document.getElementById('
+            // Generic form submission handler (for demonstration)
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault(); // Prevent actual form submission
+                    // In a real application, you would send this data to a server
+                    alert('Form submitted! (This is a demo. Data would be processed here.)');
+                    form.reset(); // Clear the form fields
+                });
+            });
+        });
+    </script>
+</body>
+</html>
